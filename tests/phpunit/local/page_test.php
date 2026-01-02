@@ -459,7 +459,7 @@ final class page_test extends \advanced_testcase {
         $page2 = $generator->create_page([]);
 
         $this->assertSame(
-            'https://www.example.com/moodle/admin/tool/muhome/?pageid=410000',
+            'https://www.example.com/moodle/admin/tool/muhome/?pageid=' . $page1->id,
             page::get_url($page1->id)->out(false)
         );
 
@@ -591,7 +591,7 @@ final class page_test extends \advanced_testcase {
     }
 
     public function test_get_my_pages_tenant(): void {
-        if (!\tool_mulib\local\mulib::is_muhome_available()) {
+        if (!\tool_mulib\local\mulib::is_mutenancy_available()) {
             return;
         }
         \tool_mutenancy\local\tenancy::activate();
@@ -725,7 +725,7 @@ final class page_test extends \advanced_testcase {
     public function test_archive_tenant_pages(): void {
         global $DB;
 
-        if (!\tool_mulib\local\mulib::is_muhome_available()) {
+        if (!\tool_mulib\local\mulib::is_mutenancy_available()) {
             return;
         }
         \tool_mutenancy\local\tenancy::activate();

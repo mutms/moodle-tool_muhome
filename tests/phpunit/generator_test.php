@@ -103,7 +103,7 @@ final class generator_test extends \advanced_testcase {
             array_keys(page::get_cohortvisible_menu($page->id))
         );
 
-        if (!\tool_mulib\local\mulib::is_muhome_available()) {
+        if (!\tool_mulib\local\mulib::is_mutenancy_available()) {
             return;
         }
         \tool_mutenancy\local\tenancy::activate();
