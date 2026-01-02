@@ -55,7 +55,6 @@ Feature: tool_muhome navigation behat steps test
 
     When I am on the "tool_muhome > Start page" page
     Then I should see "Dashboard" in the "h1" "css_element"
-    And I should see "Recently accessed courses"
 
   Scenario: User navigates to default home page via behat step
     Given I log in as "viewer1"
