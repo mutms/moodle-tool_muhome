@@ -88,7 +88,6 @@ jobs:
 
       - name: Install moodle-plugin-ci
         run: |
-          moodle-plugin-ci add-plugin --branch $MOODLE_BRANCH mutms/moodle-customfield_muhome
           moodle-plugin-ci add-plugin --branch $MOODLE_BRANCH mutms/moodle-tool_mulib
           moodle-plugin-ci install --plugin ./plugin --db-host=127.0.0.1 --db-port=${{ matrix.dbport }}
         env:
