@@ -39,12 +39,6 @@ class behat_tool_muhome extends behat_base {
             case 'all home pages management':
                 return new moodle_url('/admin/tool/muhome/management/index.php');
 
-            case 'start page':
-                return new moodle_url('/');
-
-            case 'site home page':
-                return new moodle_url('/', ['redirect' => 0]);
-
             default:
                 throw new Exception('Unrecognised tool_muhome page "' . $page . '."');
         }
