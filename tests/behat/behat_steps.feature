@@ -53,13 +53,13 @@ Feature: tool_muhome navigation behat steps test
   Scenario: User navigates to start page via behat step
     Given I log in as "viewer1"
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Dashboard" in the "h1" "css_element"
 
   Scenario: User navigates to default home page via behat step
     Given I log in as "viewer1"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
   Scenario: System viewer navigates to All home pages management the normal way

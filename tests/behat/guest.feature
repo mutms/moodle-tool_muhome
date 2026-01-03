@@ -23,10 +23,10 @@ Feature: Guests may access custom home pages
       | forcelogin         | 0 |             |
       | autologinguests    | 0 |             |
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
   Scenario: Start page and normal home page for not-logged-in users with defaultpage HOMEPAGE_SITE
@@ -38,10 +38,10 @@ Feature: Guests may access custom home pages
       | forcelogin         | 0 |             |
       | autologinguests    | 0 |             |
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
   Scenario: Start page and custom home page for not-logged-in users with defaultpage HOMEPAGE_MY
@@ -53,10 +53,10 @@ Feature: Guests may access custom home pages
       | forcelogin         | 0 |             |
       | autologinguests    | 0 |             |
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Home page title 1" in the "h1" "css_element"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Home page title 1" in the "h1" "css_element"
 
   Scenario: Start page and custom home page for not-logged-in users with defaultpage HOMEPAGE_SITE
@@ -68,10 +68,10 @@ Feature: Guests may access custom home pages
       | forcelogin         | 0 |             |
       | autologinguests    | 0 |             |
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Home page title 1" in the "h1" "css_element"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Home page title 1" in the "h1" "css_element"
 
   Scenario: Start page and normal home page for guests with defaultpage HOMEPAGE_MY
@@ -83,10 +83,10 @@ Feature: Guests may access custom home pages
       | forcelogin         | 1 |             |
       | autologinguests    | 1 |             |
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Dashboard" in the "h1" "css_element"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
   Scenario: Start page and normal home page for guests with defaultpage HOMEPAGE_MY and guest dashboard
@@ -98,10 +98,10 @@ Feature: Guests may access custom home pages
       | forcelogin         | 1 |             |
       | autologinguests    | 1 |             |
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Dashboard (Guest)" in the "h1" "css_element"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
   Scenario: Start page and normal home page for guests with defaultpage HOMEPAGE_MY and disabled guest dashboard
@@ -113,10 +113,10 @@ Feature: Guests may access custom home pages
       | forcelogin         | 1 |             |
       | autologinguests    | 1 |             |
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
   Scenario: Start page and custom home page for guests with defaultpage HOMEPAGE_SITE
@@ -128,10 +128,10 @@ Feature: Guests may access custom home pages
       | forcelogin         | 1 |             |
       | autologinguests    | 1 |             |
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Home page title 1" in the "h1" "css_element"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Home page title 1" in the "h1" "css_element"
 
   Scenario: Not-logged-in users may access additional custom pages with normal home page
@@ -142,10 +142,10 @@ Feature: Guests may access custom home pages
       | forcelogin         | 0          |             |
       | autologinguests    | 0          |             |
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
     When I click on "Fancy menu" "link" in the ".primary-navigation" "css_element"
@@ -168,10 +168,10 @@ Feature: Guests may access custom home pages
       | forcelogin         | 0          |             |
       | autologinguests    | 0          |             |
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Home page title 1" in the "h1" "css_element"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Home page title 1" in the "h1" "css_element"
 
     When I click on "Fancy menu" "link" in the ".primary-navigation" "css_element"
@@ -193,10 +193,10 @@ Feature: Guests may access custom home pages
       | forcelogin         | 1          |             |
       | autologinguests    | 1          |             |
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Acceptance test site" in the "h1" "css_element"
 
     When I click on "Fancy menu" "link" in the ".primary-navigation" "css_element"
@@ -219,10 +219,10 @@ Feature: Guests may access custom home pages
       | forcelogin         | 1          |             |
       | autologinguests    | 1          |             |
 
-    When I am on the "tool_muhome > Start page" page
+    When I am on homepage
     Then I should see "Home page title 1" in the "h1" "css_element"
 
-    When I am on the "tool_muhome > Site home page" page
+    When I am on site homepage
     Then I should see "Home page title 1" in the "h1" "css_element"
 
     When I click on "Fancy menu" "link" in the ".primary-navigation" "css_element"

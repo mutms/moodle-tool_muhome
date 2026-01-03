@@ -29,7 +29,7 @@ Feature: Multi-tenancy use cases for custom home pages
       | replacehome        | 0          | tool_muhome |
       | addmenu            | Fancy menu | tool_muhome |
       | defaulthomepage    | 0          |             |
-    And I am on the "tool_muhome > Site home page" page
+    And I am on site homepage
 
     When I click on "Fancy menu" "link" in the ".primary-navigation" "css_element"
     And  I click on "Other page 0" "link" in the ".primary-navigation" "css_element"
