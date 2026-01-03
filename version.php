@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 /** @var stdClass $plugin */
 $plugin->component = 'tool_muhome';
-$plugin->version = 2025123150;
+$plugin->version = 2026010350;
 $plugin->requires = 2024100700;
 $plugin->maturity = MATURITY_ALPHA;
 $plugin->supported = [500, 501];
