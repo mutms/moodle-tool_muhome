@@ -1,13 +1,21 @@
-# MuTMS Custom home pages for Moodle™ LMS
+# Custom home pages for Moodle™ LMS
 
 ![Moodle Plugin CI](https://github.com/mutms/moodle-tool_muhome/actions/workflows/moodle-ci.yml/badge.svg)
 
-Create flexible, customizable home pages for your LMS. This plugin allows site administrators to define one
-or more custom home pages and optionally replace the default Home item in the primary navigation.
+Create flexible, customizable home pages for your Moodle LMS. This plugin empowers site administrators to design and deploy multiple custom home pages, with the option to replace the default Home item in the primary navigation.
 
-This makes it easy to design tailored landing experiences for different audiences, branding needs, or multi‑tenant environments.
+Build tailored landing experiences for different user groups, align pages with your branding strategy, or support multi-tenant environments—all from a single installation.
 
-__Note__: Moodle blocks generally do not implement any additional access controls for attached files. Avoid placing any sensitive information in custom home page blocks.
+## Key Features
+
+- Define multiple custom home pages with unique layouts and content
+- Replace or supplement the default Moodle home page
+- Customize primary navigation to match your institutional needs
+- Perfect for multi-tenant deployments or audience-specific experiences
+
+## Security Note
+
+**Important**: Moodle blocks do not implement additional access controls for attached files. Do not include files containing sensitive or confidential information in custom home page blocks.
 
 ## Roadmap
 
