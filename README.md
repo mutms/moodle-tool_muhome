@@ -9,10 +9,6 @@ This makes it easy to design tailored landing experiences for different audience
 
 __Note__: Moodle blocks generally do not implement any additional access controls for attached files. Avoid placing any sensitive information in custom home page blocks.
 
-## Acknowledgement
-
-Some parts of this plugin were inspired by [Custom Page by RoseaThemes](https://moodle.org/plugins/local_page). 
-
 ## Roadmap
 
 * Target for production release and availability of paid support: Q2 2026
