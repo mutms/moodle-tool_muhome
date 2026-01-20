@@ -107,7 +107,6 @@ Feature: Custom page managers may manage custom home pages
       | Visible to all users  | 1           |
     And I set the following fields in the ".modal-dialog" "css_element" to these values:
       | Page name             | Home page A |
-      | Management category   | Cat 2       |
       | Title                 | HP title A  |
       | Page priority         | 1001        |
       | Archived              | 1           |
@@ -134,14 +133,33 @@ Feature: Custom page managers may manage custom home pages
     And I click on "Update" "button" in the ".modal-dialog" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
+      | 1001          | Home page A     | System              | HP title A | Yes               | No                   | Cohort 2, Cohort 3  | 5/11/26, 09:00  | 1/12/38, 09:00 | Archived |
+      | 997           | Home page 2     | Cat 1               | HP title 2 | Yes               | No                   | Cohort 1, Cohort 2  | 5/11/25, 09:00  | 1/12/35, 09:00 | Active   |
+
+    When I click on "Actions" "link" in the "Home page A" "table_row"
+    And I click on "Move page" "link" in the "Home page A" "table_row"
+    And I set the following fields in the ".modal-dialog" "css_element" to these values:
+      | Management category   | Cat 2       |
+    And I click on "Move page" "button" in the ".modal-dialog" "css_element"
+    Then the following should exist in the "reportbuilder-table" table:
+      | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1001          | Home page A     | Cat 2               | HP title A | Yes               | No                   | Cohort 2, Cohort 3  | 5/11/26, 09:00  | 1/12/38, 09:00 | Archived |
+      | 997           | Home page 2     | Cat 1               | HP title 2 | Yes               | No                   | Cohort 1, Cohort 2  | 5/11/25, 09:00  | 1/12/35, 09:00 | Active   |
+
+    When I click on "Actions" "link" in the "Home page A" "table_row"
+    And I click on "Move page" "link" in the "Home page A" "table_row"
+    And I set the following fields in the ".modal-dialog" "css_element" to these values:
+      | Management category   | System      |
+    And I click on "Move page" "button" in the ".modal-dialog" "css_element"
+    Then the following should exist in the "reportbuilder-table" table:
+      | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
+      | 1001          | Home page A     | System              | HP title A | Yes               | No                   | Cohort 2, Cohort 3  | 5/11/26, 09:00  | 1/12/38, 09:00 | Archived |
       | 997           | Home page 2     | Cat 1               | HP title 2 | Yes               | No                   | Cohort 1, Cohort 2  | 5/11/25, 09:00  | 1/12/35, 09:00 | Active   |
 
     When I click on "Actions" "link" in the "Home page A" "table_row"
     And I click on "Configure page" "link" in the "Home page A" "table_row"
     And I set the following fields in the ".modal-dialog" "css_element" to these values:
       | Page name             | Home page 1 |
-      | Management category   | System      |
       | Title                 | HP title 1  |
       | Page priority         | 1000        |
       | Archived              | 1           |
@@ -231,15 +249,15 @@ Feature: Custom page managers may manage custom home pages
 
     When I am on the "tool_muhome > All home pages management" page
     And I click on "Actions" "link" in the "Home page 1" "table_row"
-    And I click on "Configure page" "link" in the "Home page 1" "table_row"
+    And I click on "Move page" "link" in the "Home page 1" "table_row"
     And I set the following fields in the ".modal-dialog" "css_element" to these values:
       | Management category   | Cat 1       |
-    And I click on "Update" "button" in the ".modal-dialog" "css_element"
+    And I click on "Move page" "button" in the ".modal-dialog" "css_element"
     And I click on "Actions" "link" in the "Other page 2" "table_row"
-    And I click on "Configure page" "link" in the "Other page 2" "table_row"
+    And I click on "Move page" "link" in the "Other page 2" "table_row"
     And I set the following fields in the ".modal-dialog" "css_element" to these values:
       | Management category   | System       |
-    And I click on "Update" "button" in the ".modal-dialog" "css_element"
+    And I click on "Move page" "button" in the ".modal-dialog" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page name       | Management category |
       | Home page 1     | Cat 1               |

@@ -193,7 +193,7 @@ final class page_test extends \advanced_testcase {
         $cohort3 = $this->getDataGenerator()->create_cohort();
 
         $page = page::create((object)[
-            'contextid' => $syscontext->id,
+            'contextid' => $categorycontext->id,
             'name' => 'First page',
         ]);
 
@@ -283,12 +283,15 @@ final class page_test extends \advanced_testcase {
         try {
             page::update((object)[
                 'id' => $page->id,
-                'contextid' => $coursecontext->id,
+                'contextid' => $syscontext->id,
             ]);
             $this->fail('Exception expected');
         } catch (moodle_exception $ex) {
-            $this->assertInstanceOf(invalid_parameter_exception::class, $ex);
-            $this->assertSame('Invalid parameter value detected (System or category context expected)', $ex->getMessage());
+            $this->assertInstanceOf(\core\exception\coding_exception::class, $ex);
+            $this->assertSame(
+                'Coding error detected, it must be fixed by a programmer: page::update() cannot change contextid, use page::move() instead',
+                $ex->getMessage()
+            );
         }
 
         try {
@@ -303,10 +306,45 @@ final class page_test extends \advanced_testcase {
         }
     }
 
-    public function test_delete(): void {
+    public function test_move(): void {
         global $DB;
 
         $syscontext = \context_system::instance();
+        $category = $this->getDataGenerator()->create_category();
+        $categorycontext = \context_coursecat::instance($category->id);
+        $course = $this->getDataGenerator()->create_course();
+        $coursecontext = \context_course::instance($course->id);
+
+        $page = page::create((object)[
+            'contextid' => $syscontext->id,
+            'name' => 'Some page',
+        ]);
+
+        $this->setCurrentTimeStart();
+        $page = page::move($page->id, $categorycontext->id);
+        $this->assertSame((string)$categorycontext->id, $page->contextid);
+        $this->assertTimeCurrent($page->timemodified);
+
+        $this->setCurrentTimeStart();
+        $page = page::move($page->id, $syscontext->id);
+        $this->assertSame((string)$syscontext->id, $page->contextid);
+        $this->assertTimeCurrent($page->timemodified);
+
+        $DB->set_field('tool_muhome_page', 'contextid', -1, ['id' => $page->id]);
+        $page = page::move($page->id, $syscontext->id);
+        $this->assertSame((string)$syscontext->id, $page->contextid);
+
+        try {
+            page::move($page->id, $coursecontext->id);
+            $this->fail('Exception expected');
+        } catch (moodle_exception $ex) {
+            $this->assertInstanceOf(invalid_parameter_exception::class, $ex);
+            $this->assertSame('Invalid parameter value detected (System or category context expected)', $ex->getMessage());
+        }
+    }
+    public function test_delete(): void {
+        global $DB;
+
         $category = $this->getDataGenerator()->create_category();
         $categorycontext = \context_coursecat::instance($category->id);
         $cohort1 = $this->getDataGenerator()->create_cohort();

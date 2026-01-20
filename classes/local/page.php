@@ -162,6 +162,12 @@ final class page {
 
         $oldpage = $DB->get_record('tool_muhome_page', ['id' => $record->id], '*', MUST_EXIST);
 
+        if (property_exists($data, 'contextid')) {
+            if ($data->contextid != $oldpage->contextid) {
+                throw new \core\exception\coding_exception('page::update() cannot change contextid, use page::move() instead');
+            }
+        }
+
         if (property_exists($data, 'name')) {
             if (trim($data->name) === '') {
                 throw new invalid_parameter_exception('page name is required');
@@ -260,6 +266,52 @@ final class page {
 
         \cache_helper::purge_by_event('tool_muhome_invalidatecaches');
 
+        return $record;
+    }
+
+    /**
+     * Move existing page to a different context.
+     *
+     * @param int $id section id
+     * @param int $contextid new context id
+     * @return stdClass page record
+     */
+    public static function move(int $id, int $contextid): stdClass {
+        global $DB;
+
+        $page = $DB->get_record('tool_muhome_page', ['id' => $id], '*', MUST_EXIST);
+
+        $context = \context::instance_by_id($contextid);
+        if ($context->contextlevel != CONTEXT_SYSTEM && $context->contextlevel != CONTEXT_COURSECAT) {
+            throw new invalid_parameter_exception('System or category context expected');
+        }
+
+        if ($page->contextid == $context->id) {
+            return $page;
+        }
+
+        $trans = $DB->start_delegated_transaction();
+
+        // Move all page blocks to new context.
+        $bis = $DB->get_records('block_instances', ['pagetypepattern' => self::PAGE_TYPE, 'subpagepattern' => $page->id]);
+        foreach ($bis as $bi) {
+            $blockcontext = \context_block::instance($bi->id);
+            $DB->set_field('block_instances', 'parentcontextid', $context->id, ['id' => $bi->id]);
+            $blockcontext->update_moved($context);
+        }
+
+        $record = (object)[
+            'id' => $page->id,
+            'contextid' => $context->id,
+            'timemodified' => time(),
+        ];
+
+        $DB->update_record('tool_muhome_page', $record);
+
+        $trans->allow_commit();
+        \cache_helper::purge_by_event('tool_muhome_invalidatecaches');
+
+        $record = $DB->get_record('tool_muhome_page', ['id' => $record->id], '*', MUST_EXIST);
         return $record;
     }
 

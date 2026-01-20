@@ -157,6 +157,20 @@ final class pages extends system_report {
 
                 return has_capability('tool/muhome:manage', $context);
             }));
+        $url = new url('/admin/tool/muhome/management/page_move.php', ['id' => ':id']);
+        $link = new \tool_mulib\output\ajax_form\link($url, get_string('page_move', 'tool_muhome'), 'i/folder');
+        $this->add_action($link->create_report_action()
+            ->add_callback(static function (\stdclass $row): bool {
+                if (!$row->id) {
+                    return false;
+                }
+                $context = \context::instance_by_id($row->contextid, IGNORE_MISSING);
+                if (!$context) {
+                    return false;
+                }
+
+                return has_capability('tool/muhome:manage', $context);
+            }));
 
         $url = new url('/admin/tool/muhome/management/page_delete.php', ['id' => ':id']);
         $link = new \tool_mulib\output\ajax_form\link($url, get_string('page_delete', 'tool_muhome'), 'i/delete');
