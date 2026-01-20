@@ -55,11 +55,16 @@ final class management {
         $parentcontextids = array_reverse($parentcontextids);
         foreach ($parentcontextids as $parentcontextid) {
             $parentcontext = \context::instance_by_id($parentcontextid);
+            if ($parentcontext instanceof \context_system) {
+                $name = get_string('pages', 'tool_muhome');
+            } else {
+                $name = $parentcontext->get_context_name(false);
+            }
             $url = null;
             if (has_capability('tool/muhome:view', $parentcontext)) {
                 $url = new url('/admin/tool/muhome/management/index.php', ['contextid' => $parentcontext->id]);
             }
-            $PAGE->navbar->add($parentcontext->get_context_name(false), $url);
+            $PAGE->navbar->add($name, $url);
         }
 
         $actions = new header_actions(get_string('management_actions', 'tool_muhome'));
