@@ -52,6 +52,7 @@ $string['page_title'] = 'Title';
 $string['page_update'] = 'Configure page';
 $string['page_url'] = 'Page URL';
 $string['page_url_copy'] = 'Copy page URL to clipboard';
+$string['pages'] = 'Pages';
 $string['pluginname'] = 'Custom home pages';
 $string['privacy:metadata'] = 'Custom home pages plugin does not store any personal data';
 $string['setting_addmenu'] = 'Add additional home pages menu';
