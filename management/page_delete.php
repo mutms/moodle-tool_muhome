@@ -27,7 +27,6 @@
  */
 
 use core\url;
-use tool_muhome\local\management;
 use tool_muhome\local\page;
 
 /** @var moodle_database $DB */

@@ -19,15 +19,15 @@
 // phpcs:disable moodle.Commenting.InlineComment.TypeHintingMatch
 
 /**
- * Update home page.
+ * Move home page.
  *
  * @package    tool_muhome
- * @copyright  2025 Petr Skoda
+ * @copyright  2026 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use tool_muhome\local\page;
 use core\url;
+use tool_muhome\local\page;
 
 /** @var moodle_database $DB */
 /** @var moodle_page $PAGE */
@@ -39,24 +39,27 @@ require('../../../../config.php');
 $id = required_param('id', PARAM_INT);
 
 $page = $DB->get_record('tool_muhome_page', ['id' => $id], '*', MUST_EXIST);
-$context = context::instance_by_id($page->contextid);
+$context = context::instance_by_id($page->contextid, IGNORE_MISSING);
+if (!$context) {
+    $context = context_system::instance();
+}
 
 require_login();
 require_capability('tool/muhome:manage', $context);
 
-$currenturl = new url('/admin/tool/muhome/management/page_update.php', ['id' => $page->id]);
+$currenturl = new url('/admin/tool/muhome/management/page_move.php', ['id' => $page->id]);
 $returnurl = new url('/admin/tool/muhome/management/index.php', ['contextid' => $context->id]);
 
 $PAGE->set_context($context);
 $PAGE->set_url($currenturl);
 
-$page->cohortvisible = array_keys(page::get_cohortvisible_menu($page->id));
+$page->cohortids = array_keys(page::get_cohortvisible_menu($page->id));
 
-$form = new \tool_muhome\local\form\page_update(null, ['currentdata' => $page, 'context' => $context]);
+$form = new \tool_muhome\local\form\page_move(null, ['currentdata' => $page, 'context' => $context]);
 if ($form->is_cancelled()) {
     $form->ajax_form_cancelled($returnurl);
 } else if ($data = $form->get_data()) {
-    $page = page::update($data);
+    page::move($data->id, $data->contextid);
     $form->ajax_form_submitted($returnurl);
 }
 

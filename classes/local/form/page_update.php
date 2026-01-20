@@ -19,7 +19,6 @@
 
 namespace tool_muhome\local\form;
 
-use tool_muhome\external\form_autocomplete\page_contextid;
 use tool_muhome\external\form_autocomplete\page_cohortvisible;
 use tool_muhome\local\page;
 
@@ -41,20 +40,11 @@ final class page_update extends \tool_mulib\local\ajax_form {
         $mform->addRule('name', get_string('required'), 'required', null, 'client');
         $mform->setType('name', PARAM_TEXT);
 
-        page_contextid::add_element($mform, [], 'contextid', get_string('page_category', 'tool_muhome'), $context);
-
         $mform->addElement('text', 'title', get_string('page_title', 'tool_muhome'), 'maxlength="1333" size="100"');
         $mform->setType('title', PARAM_TEXT);
 
         $mform->addElement('text', 'priority', get_string('page_priority', 'tool_muhome'), 'size="5"');
         $mform->setType('priority', PARAM_INT);
-
-        $options = page::get_statuses_menu();
-        $radios = [];
-        foreach ($options as $k => $v) {
-            $radios[] = $mform->createElement('radio', 'status', '', $v, $k);
-        }
-        $mform->addElement('group', 'status_group', get_string('page_status', 'tool_muhome'), $radios, '<div class="w-100" />', false);
 
         $mform->addElement('advcheckbox', 'guestvisible', get_string('guestvisible', 'tool_muhome'), ' ');
 
@@ -77,6 +67,13 @@ final class page_update extends \tool_mulib\local\ajax_form {
             $mform->addElement('advcheckbox', 'hiddenfromtenants', get_string('hiddenfromtenants', 'tool_muhome'), ' ');
         }
 
+        $options = page::get_statuses_menu();
+        $radios = [];
+        foreach ($options as $k => $v) {
+            $radios[] = $mform->createElement('radio', 'status', '', $v, $k);
+        }
+        $mform->addElement('group', 'status_group', get_string('page_status', 'tool_muhome'), $radios, '<div class="w-100" />', false);
+
         $mform->addElement('hidden', 'id');
         $mform->setType('id', PARAM_INT);
 
@@ -87,7 +84,6 @@ final class page_update extends \tool_mulib\local\ajax_form {
 
     #[\Override]
     public function validation($data, $files) {
-        global $DB;
         $context = $this->_customdata['context'];
 
         $errors = parent::validation($data, $files);
@@ -96,22 +92,14 @@ final class page_update extends \tool_mulib\local\ajax_form {
             $errors['name'] = get_string('required');
         }
 
-        $error = page_contextid::validate_value($data['contextid'], [], $context);
-        if ($error !== null) {
-            $errors['contextid'] = $error;
-            $validatecontext = null;
-        } else {
-            $validatecontext = \context::instance_by_id($data['contextid']);
-        }
-
         if ($data['hiddenbefore'] && $data['hiddenafter'] && $data['hiddenbefore'] > $data['hiddenafter']) {
             $errors['hiddenafter'] = get_string('error');
         }
 
-        if ($validatecontext && $data['cohortvisible']) {
+        if (!$data['uservisible']) {
             $args = ['pageid' => 0, 'contextid' => $context->id];
             foreach ($data['cohortvisible'] as $cohortid) {
-                $error = page_cohortvisible::validate_value($cohortid, $args, $validatecontext);
+                $error = page_cohortvisible::validate_value($cohortid, $args, $context);
                 if ($error !== null) {
                     $errors['cohortvisible'] = $error;
                     break;

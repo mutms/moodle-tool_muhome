@@ -42,6 +42,7 @@ $string['page_actions'] = 'Custom page actions';
 $string['page_category'] = 'Management category';
 $string['page_create'] = 'Add page';
 $string['page_delete'] = 'Delete page';
+$string['page_move'] = 'Move page';
 $string['page_name'] = 'Page name';
 $string['page_priority'] = 'Page priority';
 $string['page_status'] = 'Status';

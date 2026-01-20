@@ -36,29 +36,18 @@ final class page_create extends \tool_mulib\local\ajax_form {
         $mform = $this->_form;
         $currentdata = $this->_customdata['currentdata'];
         $context = $this->_customdata['context'];
-        $syscontext = \context_system::instance();
+
+        page_contextid::add_element($mform, [], 'contextid', get_string('page_category', 'tool_muhome'), $context);
 
         $mform->addElement('text', 'name', get_string('page_name', 'tool_muhome'), 'maxlength="1333" size="100"');
         $mform->addRule('name', get_string('required'), 'required', null, 'client');
         $mform->setType('name', PARAM_TEXT);
-
-        page_contextid::add_element($mform, [], 'contextid', get_string('page_category', 'tool_muhome'), $context);
 
         $mform->addElement('text', 'title', get_string('page_title', 'tool_muhome'), 'maxlength="1333" size="100"');
         $mform->setType('title', PARAM_TEXT);
 
         $mform->addElement('text', 'priority', get_string('page_priority', 'tool_muhome'), 'size="5"');
         $mform->setType('priority', PARAM_INT);
-
-        $options = page::get_statuses_menu();
-        $radios = [];
-        foreach ($options as $k => $v) {
-            if ($k == page::STATUS_ARCHIVED) {
-                continue;
-            }
-            $radios[] = $mform->createElement('radio', 'status', '', $v, $k);
-        }
-        $mform->addElement('group', 'statusgroup', get_string('page_status', 'tool_muhome'), $radios, '<div class="w-100" />', false);
 
         $mform->addElement('advcheckbox', 'guestvisible', get_string('guestvisible', 'tool_muhome'), ' ');
 
@@ -80,6 +69,16 @@ final class page_create extends \tool_mulib\local\ajax_form {
         if (\tool_mulib\local\mulib::is_mutenancy_active()) {
             $mform->addElement('advcheckbox', 'hiddenfromtenants', get_string('hiddenfromtenants', 'tool_muhome'), ' ');
         }
+
+        $options = page::get_statuses_menu();
+        $radios = [];
+        foreach ($options as $k => $v) {
+            if ($k == page::STATUS_ARCHIVED) {
+                continue;
+            }
+            $radios[] = $mform->createElement('radio', 'status', '', $v, $k);
+        }
+        $mform->addElement('group', 'statusgroup', get_string('page_status', 'tool_muhome'), $radios, '<div class="w-100" />', false);
 
         $this->add_action_buttons(true, get_string('page_create', 'tool_muhome'));
 
