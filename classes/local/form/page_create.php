@@ -37,14 +37,14 @@ final class page_create extends \tool_mulib\local\ajax_form {
         $currentdata = $this->_customdata['currentdata'];
         $context = $this->_customdata['context'];
 
-        page_contextid::add_element($mform, [], 'contextid', get_string('page_category', 'tool_muhome'), $context);
-
         $mform->addElement('text', 'name', get_string('page_name', 'tool_muhome'), 'maxlength="1333" size="100"');
         $mform->addRule('name', get_string('required'), 'required', null, 'client');
         $mform->setType('name', PARAM_TEXT);
 
         $mform->addElement('text', 'title', get_string('page_title', 'tool_muhome'), 'maxlength="1333" size="100"');
         $mform->setType('title', PARAM_TEXT);
+
+        page_contextid::add_element($mform, [], 'contextid', get_string('page_category', 'tool_muhome'), $context);
 
         $mform->addElement('text', 'priority', get_string('page_priority', 'tool_muhome'), 'size="5"');
         $mform->setType('priority', PARAM_INT);
