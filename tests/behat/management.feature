@@ -37,7 +37,8 @@ Feature: Custom page managers may manage custom home pages
       | viewer2   | pviewer      | Category     | CAT2      |
 
   Scenario: Page manager may create, configure and delete custom home pages
-    Given I log in as "manager1"
+    Given I change window size to "large"
+    And I log in as "manager1"
     And I navigate to "Appearance > Custom home pages > Home pages management" in site administration
     And I should see "No pages found"
 
@@ -49,17 +50,6 @@ Feature: Custom page managers may manage custom home pages
       | Visible to all users | 1           |
     And I set the following fields in the ".modal-dialog" "css_element" to these values:
       | Page name            | Home page 1 |
-    # There is a focusing problem when clicking the submit button.
-    And I press the tab key
-    And I press the tab key
-    And I press the tab key
-    And I press the tab key
-    And I press the tab key
-    And I press the tab key
-    And I press the tab key
-    And I press the tab key
-    And I press the tab key
-    And I press the tab key
     And I click on "Add page" "button" in the ".modal-dialog" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page priority | Page name       | Management category | Title | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
@@ -89,8 +79,6 @@ Feature: Custom page managers may manage custom home pages
       | hiddenafter[year]     | 2035        |
       | hiddenafter[hour]     | 09          |
       | hiddenafter[minute]   | 00          |
-    # There is a focusing problem when clicking the submit button.
-    And I press the tab key
     And I click on "Add page" "button" in the ".modal-dialog" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
@@ -112,8 +100,6 @@ Feature: Custom page managers may manage custom home pages
       | Archived              | 1           |
       | Visible to guests     | 1           |
       | Visible to all users  | 0           |
-    And I press the tab key
-    And I set the following fields in the ".modal-dialog" "css_element" to these values:
       | Visible to cohorts    | CH2, CH3    |
       | hiddenbefore[enabled] | 1           |
       | hiddenbefore[day]     | 5           |
@@ -121,15 +107,12 @@ Feature: Custom page managers may manage custom home pages
       | hiddenbefore[year]    | 2026        |
       | hiddenbefore[hour]    | 09          |
       | hiddenbefore[minute]  | 00          |
-    And I press the tab key
-    And I set the following fields in the ".modal-dialog" "css_element" to these values:
       | hiddenafter[enabled]  | 1           |
       | hiddenafter[day]      | 1           |
       | hiddenafter[month]    | 12          |
       | hiddenafter[year]     | 2038        |
       | hiddenafter[hour]     | 09          |
       | hiddenafter[minute]   | 00          |
-    And I press the tab key
     And I click on "Update" "button" in the ".modal-dialog" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
@@ -167,7 +150,6 @@ Feature: Custom page managers may manage custom home pages
       | Visible to all users  | 1           |
       | hiddenbefore[enabled] | 0           |
       | hiddenafter[enabled]  | 0           |
-    And I press the tab key
     And I click on "Update" "button" in the ".modal-dialog" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
