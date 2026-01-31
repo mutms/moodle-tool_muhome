@@ -6,7 +6,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 
-- No changes
+### Fixed
+
+- Changed tool_muhome_cohortvisible database table name to tool_muhome_page_cohortvisible to match other plugins
 
 ## [mu-4.5.8-04] - 2026-01-25
 
