@@ -31,7 +31,7 @@ $plugin->component = 'tool_muhome';
 $plugin->version = 2026030150;
 $plugin->requires = 2024100700;
 $plugin->supported = [500, 501];
-$plugin->release = 'v5.0.6.02';
+$plugin->release = 'v5.0.6.02+';
 
 $plugin->dependencies = [
     'tool_mulib' => 2026030150,
