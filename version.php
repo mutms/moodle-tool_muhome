@@ -28,11 +28,11 @@ defined('MOODLE_INTERNAL') || die();
 
 /** @var stdClass $plugin */
 $plugin->component = 'tool_muhome';
-$plugin->version = 2026091850;
+$plugin->version = 2026091850.01;
 $plugin->requires = 2024100700;
 $plugin->supported = [500, 502];
 $plugin->incompatible = 503;
-$plugin->release = 'v5.0.10.01+';
+$plugin->release = 'v5.0.10.02';
 
 $plugin->dependencies = [
     'tool_mulib' => 2026091850,
