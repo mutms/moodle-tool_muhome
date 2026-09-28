@@ -28,11 +28,11 @@
 
 use core\url;
 use tool_muhome\local\page;
+use tool_mulib\muform\handler;
 
 /** @var moodle_database $DB */
 /** @var moodle_page $PAGE */
-
-define('AJAX_SCRIPT', true);
+/** @var core_renderer $OUTPUT */
 
 require('../../../../config.php');
 
@@ -52,15 +52,21 @@ $returnurl = new url('/admin/tool/muhome/management/index.php', ['contextid' => 
 
 $PAGE->set_context($context);
 $PAGE->set_url($currenturl);
+$title = get_string('page_delete', 'tool_muhome');
+$PAGE->set_title($title);
+$PAGE->set_heading($title);
 
-$page->cohortids = array_keys(page::get_cohortvisible_menu($page->id));
+$handler = handler::from_request();
 
-$form = new \tool_muhome\local\form\page_delete(null, ['currentdata' => $page, 'context' => $context]);
+$form = new \tool_muhome\local\form\page_delete($currenturl, $page);
+
 if ($form->is_cancelled()) {
-    $form->ajax_form_cancelled($returnurl);
-} else if ($data = $form->get_data()) {
-    page::delete($page->id);
-    $form->ajax_form_submitted($returnurl);
+    $handler->cancelled($returnurl);
 }
 
-$form->ajax_form_render();
+if ($data = $form->get_data()) {
+    page::delete($page->id);
+    $handler->submitted($returnurl);
+}
+
+$handler->render($form);

@@ -21,7 +21,7 @@ namespace tool_muhome\local;
 
 use core\url;
 use tool_mulib\output\header_actions;
-use tool_mulib\output\ajax_form\button;
+use tool_mulib\output\muform\dialog\button;
 use tool_mulib\local\sql;
 use stdClass;
 

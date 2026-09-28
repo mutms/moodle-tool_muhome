@@ -46,43 +46,33 @@ Feature: Custom page managers may manage custom home pages
     And I should see "No pages found"
 
     When I press "Add page"
-    And the following fields in the ".modal-dialog" "css_element" match these values:
+    And the following muform fields in the "dialog[open]" "css_element" match:
       | Page priority        | 1000        |
-      | Draft                | 1           |
+      | status               | Draft       |
       | Visible to guests    | 0           |
       | Visible to all users | 1           |
-    And I set the following fields in the ".modal-dialog" "css_element" to these values:
+    And I set the following muform fields in the "dialog[open]" "css_element":
       | Page name            | Home page 1 |
-    And I click on "Add page" "button" in the ".modal-dialog" "css_element"
+    And I click on "Add page" "button" in the "dialog[open]" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page priority | Page name       | Management category | Title | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1000          | Home page 1     | System              |       | No                | Yes                  |                     |                 |                | Draft    |
 
     When I press "Add page"
-    And the following fields in the ".modal-dialog" "css_element" match these values:
-      | Page priority         | 990         |
-    And I set the following fields in the ".modal-dialog" "css_element" to these values:
-      | Page name             | Home page 2 |
-      | Management category   | Cat 1       |
-      | Title                 | HP title 2  |
-      | Page priority         | 997         |
-      | Active                | 1           |
-      | Visible to guests     | 1           |
-      | Visible to all users  | 0           |
-      | Visible to cohorts    | CH1, CH2    |
-      | hiddenbefore[enabled] | 1           |
-      | hiddenbefore[day]     | 5           |
-      | hiddenbefore[month]   | 11          |
-      | hiddenbefore[year]    | 2025        |
-      | hiddenbefore[hour]    | 09          |
-      | hiddenbefore[minute]  | 00          |
-      | hiddenafter[enabled]  | 1           |
-      | hiddenafter[day]      | 1           |
-      | hiddenafter[month]    | 12          |
-      | hiddenafter[year]     | 2035        |
-      | hiddenafter[hour]     | 09          |
-      | hiddenafter[minute]   | 00          |
-    And I click on "Add page" "button" in the ".modal-dialog" "css_element"
+    And the following muform fields in the "dialog[open]" "css_element" match:
+      | Page priority         | 990                |
+    And I set the following muform fields in the "dialog[open]" "css_element":
+      | Page name             | Home page 2        |
+      | Management category   | Cat 1              |
+      | Title                 | HP title 2         |
+      | Page priority         | 997                |
+      | status                | Active             |
+      | Visible to guests     | 1                  |
+      | Visible to all users  | 0                  |
+      | Visible to cohorts    | Cohort 1, Cohort 2 |
+      | Hidden before         | 2025-11-05 09:00   |
+      | Hidden after          | 2035-12-01 09:00   |
+    And I click on "Add page" "button" in the "dialog[open]" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1000          | Home page 1     | System              |            | No                | Yes                  |                     |                 |                | Draft    |
@@ -90,33 +80,23 @@ Feature: Custom page managers may manage custom home pages
 
     When I click on "Actions" "link" in the "Home page 1" "table_row"
     And I click on "Configure page" "link" in the "Home page 1" "table_row"
-    And the following fields in the ".modal-dialog" "css_element" match these values:
+    And the following muform fields in the "dialog[open]" "css_element" match:
       | Page name             | Home page 1 |
       | Page priority         | 1000        |
-      | Draft                 | 1           |
+      | status                | Draft       |
       | Visible to guests     | 0           |
       | Visible to all users  | 1           |
-    And I set the following fields in the ".modal-dialog" "css_element" to these values:
-      | Page name             | Home page A |
-      | Title                 | HP title A  |
-      | Page priority         | 1001        |
-      | Archived              | 1           |
-      | Visible to guests     | 1           |
-      | Visible to all users  | 0           |
-      | Visible to cohorts    | CH2, CH3    |
-      | hiddenbefore[enabled] | 1           |
-      | hiddenbefore[day]     | 5           |
-      | hiddenbefore[month]   | 11          |
-      | hiddenbefore[year]    | 2026        |
-      | hiddenbefore[hour]    | 09          |
-      | hiddenbefore[minute]  | 00          |
-      | hiddenafter[enabled]  | 1           |
-      | hiddenafter[day]      | 1           |
-      | hiddenafter[month]    | 12          |
-      | hiddenafter[year]     | 2038        |
-      | hiddenafter[hour]     | 09          |
-      | hiddenafter[minute]   | 00          |
-    And I click on "Update" "button" in the ".modal-dialog" "css_element"
+    And I set the following muform fields in the "dialog[open]" "css_element":
+      | Page name             | Home page A        |
+      | Title                 | HP title A         |
+      | Page priority         | 1001               |
+      | status                | Archived           |
+      | Visible to guests     | 1                  |
+      | Visible to all users  | 0                  |
+      | Visible to cohorts    | Cohort 2, Cohort 3 |
+      | Hidden before         | 2026-11-05 09:00   |
+      | Hidden after          | 2038-12-01 09:00   |
+    And I click on "Update" "button" in the "dialog[open]" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1001          | Home page A     | System              | HP title A | Yes               | No                   | Cohort 2, Cohort 3  | 5/11/26, 09:00  | 1/12/38, 09:00 | Archived |
@@ -124,9 +104,9 @@ Feature: Custom page managers may manage custom home pages
 
     When I click on "Actions" "link" in the "Home page A" "table_row"
     And I click on "Move page" "link" in the "Home page A" "table_row"
-    And I set the following fields in the ".modal-dialog" "css_element" to these values:
+    And I set the following muform fields in the "dialog[open]" "css_element":
       | Management category   | Cat 2       |
-    And I click on "Move page" "button" in the ".modal-dialog" "css_element"
+    And I click on "Move page" "button" in the "dialog[open]" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1001          | Home page A     | Cat 2               | HP title A | Yes               | No                   | Cohort 2, Cohort 3  | 5/11/26, 09:00  | 1/12/38, 09:00 | Archived |
@@ -134,9 +114,9 @@ Feature: Custom page managers may manage custom home pages
 
     When I click on "Actions" "link" in the "Home page A" "table_row"
     And I click on "Move page" "link" in the "Home page A" "table_row"
-    And I set the following fields in the ".modal-dialog" "css_element" to these values:
+    And I set the following muform fields in the "dialog[open]" "css_element":
       | Management category   | System      |
-    And I click on "Move page" "button" in the ".modal-dialog" "css_element"
+    And I click on "Move page" "button" in the "dialog[open]" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1001          | Home page A     | System              | HP title A | Yes               | No                   | Cohort 2, Cohort 3  | 5/11/26, 09:00  | 1/12/38, 09:00 | Archived |
@@ -144,16 +124,16 @@ Feature: Custom page managers may manage custom home pages
 
     When I click on "Actions" "link" in the "Home page A" "table_row"
     And I click on "Configure page" "link" in the "Home page A" "table_row"
-    And I set the following fields in the ".modal-dialog" "css_element" to these values:
+    And I set the following muform fields in the "dialog[open]" "css_element":
       | Page name             | Home page 1 |
       | Title                 | HP title 1  |
       | Page priority         | 1000        |
-      | Archived              | 1           |
+      | status                | Archived    |
       | Visible to guests     | 0           |
       | Visible to all users  | 1           |
-      | hiddenbefore[enabled] | 0           |
-      | hiddenafter[enabled]  | 0           |
-    And I click on "Update" "button" in the ".modal-dialog" "css_element"
+      | Hidden before         |             |
+      | Hidden after          |             |
+    And I click on "Update" "button" in the "dialog[open]" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1000          | Home page 1     | System              | HP title 1 | No                | Yes                  |                     |                 |                | Archived |
@@ -161,7 +141,7 @@ Feature: Custom page managers may manage custom home pages
 
     When I click on "Actions" "link" in the "Home page 1" "table_row"
     And I click on "Delete page" "link" in the "Home page 1" "table_row"
-    And I click on "Delete page" "button" in the ".modal-dialog" "css_element"
+    And I click on "Delete page" "button" in the "dialog[open]" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 997           | Home page 2     | Cat 1               | HP title 2 | Yes               | No                   | Cohort 1, Cohort 2  | 5/11/25, 09:00  | 1/12/35, 09:00 | Active   |
@@ -235,14 +215,14 @@ Feature: Custom page managers may manage custom home pages
     When I am on the "tool_muhome > All home pages management" page
     And I click on "Actions" "link" in the "Home page 1" "table_row"
     And I click on "Move page" "link" in the "Home page 1" "table_row"
-    And I set the following fields in the ".modal-dialog" "css_element" to these values:
+    And I set the following muform fields in the "dialog[open]" "css_element":
       | Management category   | Cat 1       |
-    And I click on "Move page" "button" in the ".modal-dialog" "css_element"
+    And I click on "Move page" "button" in the "dialog[open]" "css_element"
     And I click on "Actions" "link" in the "Other page 2" "table_row"
     And I click on "Move page" "link" in the "Other page 2" "table_row"
-    And I set the following fields in the ".modal-dialog" "css_element" to these values:
+    And I set the following muform fields in the "dialog[open]" "css_element":
       | Management category   | System       |
-    And I click on "Move page" "button" in the ".modal-dialog" "css_element"
+    And I click on "Move page" "button" in the "dialog[open]" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | Page name       | Management category |
       | Home page 1     | Cat 1               |

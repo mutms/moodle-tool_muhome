@@ -28,11 +28,11 @@
 
 use core\url;
 use tool_muhome\local\page;
+use tool_mulib\muform\handler;
 
 /** @var moodle_database $DB */
 /** @var moodle_page $PAGE */
-
-define('AJAX_SCRIPT', true);
+/** @var core_renderer $OUTPUT */
 
 require('../../../../config.php');
 
@@ -47,20 +47,28 @@ if ($context->contextlevel != CONTEXT_SYSTEM && $context->contextlevel != CONTEX
 }
 
 $currenturl = new url('/admin/tool/muhome/management/page_create.php', ['contextid' => $context->id]);
-$returnurl = new url('/admin/tool/muhome/management/index.php');
+$returnurl = new url('/admin/tool/muhome/management/index.php', ['contextid' => $context->id]);
 
 $PAGE->set_context($context);
 $PAGE->set_url($currenturl);
+$title = get_string('page_create', 'tool_muhome');
+$PAGE->set_title($title);
+$PAGE->set_heading($title);
+
+$handler = handler::from_request();
 
 $page = page::get_defaults($context->id);
 
-$form = new \tool_muhome\local\form\page_create(null, ['currentdata' => $page, 'context' => $context]);
+$form = new \tool_muhome\local\form\page_create($currenturl, $page, ['context' => $context]);
+
 if ($form->is_cancelled()) {
-    $form->ajax_form_cancelled($returnurl);
-} else if ($data = $form->get_data()) {
-    $page = page::create($data);
-    $returnurl = new url('/admin/tool/muhome/management/index.php', ['contextid' => $context->id]);
-    $form->ajax_form_submitted($returnurl);
+    $handler->cancelled($returnurl);
 }
 
-$form->ajax_form_render();
+if ($data = $form->get_data()) {
+    $page = page::create($data);
+    $returnurl = new url('/admin/tool/muhome/management/index.php', ['contextid' => $page->contextid]);
+    $handler->submitted($returnurl);
+}
+
+$handler->render($form);

@@ -19,7 +19,13 @@
 
 namespace tool_muhome\local\form;
 
-use tool_muhome\external\form_autocomplete\page_contextid;
+use tool_mulib\muform\element\autocomplete;
+use tool_mulib\muform\element\buttons;
+use tool_mulib\muform\element\cancel;
+use tool_mulib\muform\element\info;
+use tool_mulib\muform\element\submit;
+use tool_mulib\muform\form;
+use tool_muhome\muform\autocomplete\page_contextid;
 
 /**
  * Move page to a different context.
@@ -28,38 +34,22 @@ use tool_muhome\external\form_autocomplete\page_contextid;
  * @copyright  2026 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class page_move extends \tool_mulib\local\ajax_form {
+final class page_move extends form {
     #[\Override]
-    protected function definition() {
-        $mform = $this->_form;
-        $currentdata = $this->_customdata['currentdata'];
-        $context = $this->_customdata['context'];
+    protected function definition(): void {
+        $page = $this->get_current_data();
 
-        $mform->addElement('static', 'staticname', get_string('page_name', 'tool_muhome'), format_string($currentdata->name));
+        $this->add(new info('name', get_string('page_name', 'tool_muhome')));
 
-        $mform->addElement('static', 'statictitle', get_string('page_title', 'tool_muhome'), format_string($currentdata->title));
+        $this->add(new info('title', get_string('page_title', 'tool_muhome')));
 
-        page_contextid::add_element($mform, [], 'contextid', get_string('page_category', 'tool_muhome'), $context);
+        $source = new page_contextid((int)$page['contextid']);
+        $contextid = new autocomplete('contextid', get_string('page_category', 'tool_muhome'), $source);
+        $contextid->set_required(true);
+        $this->add($contextid);
 
-        $mform->addElement('hidden', 'id');
-        $mform->setType('id', PARAM_INT);
-
-        $this->add_action_buttons(true, get_string('page_move', 'tool_muhome'));
-
-        $this->set_data($currentdata);
-    }
-
-    #[\Override]
-    public function validation($data, $files) {
-        $context = $this->_customdata['context'];
-
-        $errors = parent::validation($data, $files);
-
-        $error = page_contextid::validate_value($data['contextid'], [], $context);
-        if ($error !== null) {
-            $errors['contextid'] = $error;
-        }
-
-        return $errors;
+        $this->add(new buttons('buttons'));
+        $this->add(new submit('submit', get_string('page_move', 'tool_muhome')), 'buttons');
+        $this->add(new cancel(), 'buttons');
     }
 }

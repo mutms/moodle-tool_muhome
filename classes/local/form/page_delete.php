@@ -19,6 +19,12 @@
 
 namespace tool_muhome\local\form;
 
+use tool_mulib\muform\element\buttons;
+use tool_mulib\muform\element\cancel;
+use tool_mulib\muform\element\info;
+use tool_mulib\muform\element\submit;
+use tool_mulib\muform\form;
+
 /**
  * Delete page.
  *
@@ -26,21 +32,15 @@ namespace tool_muhome\local\form;
  * @copyright  2025 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class page_delete extends \tool_mulib\local\ajax_form {
+final class page_delete extends form {
     #[\Override]
-    protected function definition() {
-        $mform = $this->_form;
-        $currentdata = $this->_customdata['currentdata'];
+    protected function definition(): void {
+        $this->add(new info('name', get_string('page_name', 'tool_muhome')));
 
-        $mform->addElement('static', 'staticname', get_string('page_name', 'tool_muhome'), format_string($currentdata->name));
+        $this->add(new info('title', get_string('page_title', 'tool_muhome')));
 
-        $mform->addElement('static', 'statictitle', get_string('page_title', 'tool_muhome'), format_string($currentdata->title));
-
-        $mform->addElement('hidden', 'id');
-        $mform->setType('id', PARAM_INT);
-
-        $this->add_action_buttons(true, get_string('page_delete', 'tool_muhome'));
-
-        $this->set_data($currentdata);
+        $this->add(new buttons('buttons'));
+        $this->add(new submit('submit', get_string('page_delete', 'tool_muhome')), 'buttons');
+        $this->add(new cancel(), 'buttons');
     }
 }

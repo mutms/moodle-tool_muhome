@@ -19,9 +19,20 @@
 
 namespace tool_muhome\local\form;
 
-use tool_muhome\external\form_autocomplete\page_contextid;
-use tool_muhome\external\form_autocomplete\page_cohortvisible;
+use tool_mulib\muform\element\autocomplete;
+use tool_mulib\muform\element\autocompletemany;
+use tool_mulib\muform\element\buttons;
+use tool_mulib\muform\element\cancel;
+use tool_mulib\muform\element\checkbox;
+use tool_mulib\muform\element\datetime;
+use tool_mulib\muform\element\number;
+use tool_mulib\muform\element\radios;
+use tool_mulib\muform\element\submit;
+use tool_mulib\muform\element\text;
+use tool_mulib\muform\form;
 use tool_muhome\local\page;
+use tool_muhome\muform\autocomplete\page_contextid;
+use tool_muhome\muform\autocompletemany\page_cohortvisible;
 
 /**
  * Add a page.
@@ -30,94 +41,63 @@ use tool_muhome\local\page;
  * @copyright  2025 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class page_create extends \tool_mulib\local\ajax_form {
+final class page_create extends form {
     #[\Override]
-    protected function definition() {
-        $mform = $this->_form;
-        $currentdata = $this->_customdata['currentdata'];
-        $context = $this->_customdata['context'];
+    protected function definition(): void {
+        $context = $this->get_extra_data()['context'];
 
-        $mform->addElement('text', 'name', get_string('page_name', 'tool_muhome'), 'maxlength="1333" size="100"');
-        $mform->addRule('name', get_string('required'), 'required', null, 'client');
-        $mform->setType('name', PARAM_TEXT);
+        $name = new text('name', get_string('page_name', 'tool_muhome'), ['maxlength' => 1333, 'width' => 'full']);
+        $name->set_required(true);
+        $this->add($name);
 
-        $mform->addElement('text', 'title', get_string('page_title', 'tool_muhome'), 'maxlength="1333" size="100"');
-        $mform->setType('title', PARAM_TEXT);
+        $this->add(new text('title', get_string('page_title', 'tool_muhome'), ['maxlength' => 1333, 'width' => 'full']));
 
-        page_contextid::add_element($mform, [], 'contextid', get_string('page_category', 'tool_muhome'), $context);
+        $contextid = new autocomplete('contextid', get_string('page_category', 'tool_muhome'), new page_contextid($context->id));
+        $contextid->set_required(true);
+        $this->add($contextid);
 
-        $mform->addElement('text', 'priority', get_string('page_priority', 'tool_muhome'), 'size="5"');
-        $mform->setType('priority', PARAM_INT);
+        $this->add(new number('priority', get_string('page_priority', 'tool_muhome'), ['width' => 'small']));
 
-        $mform->addElement('advcheckbox', 'guestvisible', get_string('guestvisible', 'tool_muhome'), ' ');
+        $this->add(new checkbox('guestvisible', get_string('guestvisible', 'tool_muhome')));
 
-        $mform->addElement('advcheckbox', 'uservisible', get_string('uservisible', 'tool_muhome'), ' ');
+        $this->add(new checkbox('uservisible', get_string('uservisible', 'tool_muhome')));
 
-        page_cohortvisible::add_element(
-            $mform,
-            ['pageid' => 0, 'contextid' => $context->id],
-            'cohortvisible',
-            get_string('cohortvisible', 'tool_muhome'),
-            $context
-        );
-        $mform->hideIf('cohortvisible', 'uservisible', 'eq', 1);
+        $source = new page_cohortvisible(0, $context->id);
+        $this->add(new autocompletemany('cohortvisible', get_string('cohortvisible', 'tool_muhome'), $source));
+        $this->get_display_manager()->hide_if('cohortvisible', 'uservisible', 'checked');
 
-        $mform->addElement('date_time_selector', 'hiddenbefore', get_string('hiddenbefore', 'tool_muhome'), ['optional' => true]);
+        $this->add(new datetime('hiddenbefore', get_string('hiddenbefore', 'tool_muhome')));
 
-        $mform->addElement('date_time_selector', 'hiddenafter', get_string('hiddenafter', 'tool_muhome'), ['optional' => true]);
+        $this->add(new datetime('hiddenafter', get_string('hiddenafter', 'tool_muhome')));
 
         if (\tool_mulib\local\mulib::is_mutenancy_active()) {
-            $mform->addElement('advcheckbox', 'hiddenfromtenants', get_string('hiddenfromtenants', 'tool_muhome'), ' ');
+            $this->add(new checkbox('hiddenfromtenants', get_string('hiddenfromtenants', 'tool_muhome')));
         }
 
         $options = page::get_statuses_menu();
-        $radios = [];
-        foreach ($options as $k => $v) {
-            if ($k == page::STATUS_ARCHIVED) {
-                continue;
-            }
-            $radios[] = $mform->createElement('radio', 'status', '', $v, $k);
-        }
-        $mform->addElement('group', 'statusgroup', get_string('page_status', 'tool_muhome'), $radios, '<div class="w-100" />', false);
+        unset($options[page::STATUS_ARCHIVED]);
+        $status = new radios('status', get_string('page_status', 'tool_muhome'), $options);
+        $status->set_required(true);
+        $this->add($status);
 
-        $this->add_action_buttons(true, get_string('page_create', 'tool_muhome'));
-
-        $this->set_data($currentdata);
+        $this->add(new buttons('buttons'));
+        $this->add(new submit('submit', get_string('page_create', 'tool_muhome')), 'buttons');
+        $this->add(new cancel(), 'buttons');
     }
 
     #[\Override]
-    public function validation($data, $files) {
-        $context = $this->_customdata['context'];
-
-        $errors = parent::validation($data, $files);
-
-        if (trim($data['name']) === '') {
-            $errors['name'] = get_string('required');
-        }
-
-        $error = page_contextid::validate_value($data['contextid'], [], $context);
-        if ($error !== null) {
-            $errors['contextid'] = $error;
-            $validatecontext = null;
-        } else {
-            $validatecontext = \context::instance_by_id($data['contextid']);
-        }
-
+    protected function validation(array $data, array &$allerrors): void {
         if ($data['hiddenbefore'] && $data['hiddenafter'] && $data['hiddenbefore'] > $data['hiddenafter']) {
-            $errors['hiddenafter'] = get_string('error');
+            $allerrors['hiddenafter'][] = get_string('error');
         }
 
-        if ($validatecontext && $data['cohortvisible']) {
-            $args = ['pageid' => 0, 'contextid' => $context->id];
-            foreach ($data['cohortvisible'] as $cohortid) {
-                $error = page_cohortvisible::validate_value($cohortid, $args, $validatecontext);
-                if ($error !== null) {
-                    $errors['cohortvisible'] = $error;
-                    break;
-                }
-            }
+        if ($data['uservisible'] || !$data['cohortvisible'] || isset($allerrors['contextid'])) {
+            return;
         }
-
-        return $errors;
+        // Cohorts were searched in the original context, the selected context may belong to a tenant.
+        $source = new page_cohortvisible(0, (int)$data['contextid']);
+        if ($source->validate($data['cohortvisible'])) {
+            $allerrors['cohortvisible'][] = get_string('error');
+        }
     }
 }

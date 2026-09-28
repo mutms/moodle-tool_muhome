@@ -101,12 +101,12 @@ $PAGE->set_heading($title);
 $actions = new header_actions(get_string('page_actions', 'tool_muhome'));
 
 if (has_capability('tool/muhome:manage', $context)) {
-    $link = new \tool_mulib\output\ajax_form\link(
+    $link = new \tool_mulib\output\muform\dialog\link(
         new url('/admin/tool/muhome/management/page_update.php', ['id' => $page->id]),
         get_string('page_update', 'tool_muhome'),
         'i/settings'
     );
-    $actions->get_dropdown()->add_ajax_form($link);
+    $actions->get_dropdown()->add_dialog($link);
 }
 if (has_capability('tool/muhome:view', $context)) {
     $url = new url('/admin/tool/muhome/management/index.php', ['contextid' => $context->id]);

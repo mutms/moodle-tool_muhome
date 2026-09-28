@@ -26,13 +26,13 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use tool_muhome\local\page;
 use core\url;
+use tool_muhome\local\page;
+use tool_mulib\muform\handler;
 
 /** @var moodle_database $DB */
 /** @var moodle_page $PAGE */
-
-define('AJAX_SCRIPT', true);
+/** @var core_renderer $OUTPUT */
 
 require('../../../../config.php');
 
@@ -49,15 +49,24 @@ $returnurl = new url('/admin/tool/muhome/management/index.php', ['contextid' => 
 
 $PAGE->set_context($context);
 $PAGE->set_url($currenturl);
+$title = get_string('page_update', 'tool_muhome');
+$PAGE->set_title($title);
+$PAGE->set_heading($title);
+
+$handler = handler::from_request();
 
 $page->cohortvisible = array_keys(page::get_cohortvisible_menu($page->id));
 
-$form = new \tool_muhome\local\form\page_update(null, ['currentdata' => $page, 'context' => $context]);
+$form = new \tool_muhome\local\form\page_update($currenturl, $page);
+
 if ($form->is_cancelled()) {
-    $form->ajax_form_cancelled($returnurl);
-} else if ($data = $form->get_data()) {
-    $page = page::update($data);
-    $form->ajax_form_submitted($returnurl);
+    $handler->cancelled($returnurl);
 }
 
-$form->ajax_form_render();
+if ($data = $form->get_data()) {
+    $data->id = $page->id;
+    page::update($data);
+    $handler->submitted($returnurl);
+}
+
+$handler->render($form);
