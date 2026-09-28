@@ -79,7 +79,7 @@ Feature: Multi-tenancy use cases for custom home pages
   Scenario: Admin may see tenant custom pages management menu after switch
     Given I log in as "admin"
     And I click on "Switch tenant" "link" in the ".navbar" "css_element"
-    And I click on "Switch tenant" "button" in the ".modal-dialog" "css_element"
+    And I click on "Switch tenant" "button" in the "dialog[open]" "css_element"
     And I set the following fields to these values:
       | Tenant      | Tenant 1         |
     When I click on "Switch tenant" "button" in the ".modal-dialog" "css_element"
