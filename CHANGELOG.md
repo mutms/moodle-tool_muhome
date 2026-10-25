@@ -9,3 +9,4 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 ### Changed
 
 - migration to new forms library
+- cohort names link to cohort management, the advanced cohort management page is used when installed

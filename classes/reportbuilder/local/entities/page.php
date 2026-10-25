@@ -266,7 +266,8 @@ final class page extends base {
                 if (!$cohorts) {
                     return '';
                 }
-                $cohorts = array_map('format_string', $cohorts);
+                $link = !\tool_mulib\local\reportbuilder_util::is_downloading();
+                $cohorts = \tool_mulib\local\cohort_util::format_cohort_names(array_keys($cohorts), $link);
                 return implode(', ', $cohorts);
             });
 
