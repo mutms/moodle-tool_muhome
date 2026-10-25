@@ -46,4 +46,8 @@ $callbacks = [
         'callback' => [\tool_muhome\callback\core::class, 'hook_primary_extend'],
         'priority' => -99999999, // As low as possible to override all other observer changes.
     ],
+    [
+        'hook' => \tool_mucohort\hook\cohort_usage::class,
+        'callback' => [\tool_muhome\callback\tool_mucohort::class, 'cohort_usage'],
+    ],
 ];

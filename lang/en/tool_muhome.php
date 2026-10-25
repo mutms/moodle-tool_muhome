@@ -25,6 +25,7 @@
  */
 
 $string['cachedef_mypages'] = 'My home pages cache';
+$string['cohort_usage_page'] = 'Home pages visible to cohort members';
 $string['cohortvisible'] = 'Visible to cohorts';
 $string['currentcontextonly'] = 'Exclude sub-categories';
 $string['edit_mode_hint'] = 'Turn on _Edit mode_ to start adding blocks and personalizing this custom home page.';

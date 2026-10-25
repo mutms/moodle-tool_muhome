@@ -6,6 +6,10 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased]
 
+### Added
+
+- cohort usage in home pages is listed in advanced cohort management
+
 ### Changed
 
 - migration to new forms library
