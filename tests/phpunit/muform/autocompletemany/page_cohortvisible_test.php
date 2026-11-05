@@ -22,17 +22,18 @@ namespace tool_muhome\phpunit\muform\autocompletemany;
 use tool_muhome\local\page;
 use tool_muhome\muform\autocompletemany\page_cohortvisible;
 use tool_mulib\local\mulib;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Visible to cohorts autocomplete source tests.
  *
- * @group       MuTMS
  * @package     tool_muhome
  * @copyright   2026 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @covers \tool_muhome\muform\autocompletemany\page_cohortvisible
  */
+#[CoversClass(\tool_muhome\muform\autocompletemany\page_cohortvisible::class)]
+#[Group('MuTMS')]
 final class page_cohortvisible_test extends \advanced_testcase {
     #[\Override]
     public function setUp(): void {

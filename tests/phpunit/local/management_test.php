@@ -22,17 +22,18 @@ namespace tool_muhome\phpunit\local;
 
 use tool_muhome\local\page;
 use tool_muhome\local\management;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Management class tests.
  *
- * @group       MuTMS
  * @package     tool_muhome
  * @copyright   2025 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @covers \tool_muhome\local\management
  */
+#[CoversClass(\tool_muhome\local\management::class)]
+#[Group('MuTMS')]
 final class management_test extends \advanced_testcase {
     public function setUp(): void {
         parent::setUp();

@@ -23,17 +23,18 @@ namespace tool_muhome\phpunit\callback;
 use tool_muhome\callback\core;
 use tool_muhome\local\page;
 use core\exception\moodle_exception;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Core callbacks class tests.
  *
- * @group       MuTMS
  * @package     tool_muhome
  * @copyright   2025 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @covers \tool_muhome\callback\core
  */
+#[CoversClass(\tool_muhome\callback\core::class)]
+#[Group('MuTMS')]
 final class core_test extends \advanced_testcase {
     public function setUp(): void {
         parent::setUp();

@@ -23,17 +23,18 @@ namespace tool_muhome\phpunit\local;
 use tool_muhome\local\page;
 use core\exception\moodle_exception;
 use core\exception\invalid_parameter_exception;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Page class tests.
  *
- * @group       MuTMS
  * @package     tool_muhome
  * @copyright   2025 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @covers \tool_muhome\local\page
  */
+#[CoversClass(\tool_muhome\local\page::class)]
+#[Group('MuTMS')]
 final class page_test extends \advanced_testcase {
     public function setUp(): void {
         parent::setUp();

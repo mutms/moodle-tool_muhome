@@ -19,17 +19,18 @@
 namespace tool_muhome\phpunit\muform\autocomplete;
 
 use tool_muhome\muform\autocomplete\page_contextid;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Page context autocomplete source tests.
  *
- * @group       MuTMS
  * @package     tool_muhome
  * @copyright   2026 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @covers \tool_muhome\muform\autocomplete\page_contextid
  */
+#[CoversClass(\tool_muhome\muform\autocomplete\page_contextid::class)]
+#[Group('MuTMS')]
 final class page_contextid_test extends \advanced_testcase {
     public function test_source(): void {
         $this->resetAfterTest();

@@ -22,15 +22,16 @@
 namespace tool_muhome\phpunit;
 
 use tool_muhome\local\page;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Standard plugin API tests.
  *
- * @group       MuTMS
  * @package     tool_muhome
  * @copyright   2025 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+#[Group('MuTMS')]
 final class lib_test extends \advanced_testcase {
     public function setUp(): void {
         parent::setUp();

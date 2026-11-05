@@ -21,26 +21,24 @@
 namespace tool_muhome\phpunit;
 
 use tool_muhome\local\page;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Custom home pages generator tests.
  *
- * @group       MuTMS
  * @package     tool_muhome
  * @copyright   2025 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @coversDefaultClass \tool_muhome_generator
  */
+#[CoversClass(\tool_muhome_generator::class)]
+#[Group('MuTMS')]
 final class generator_test extends \advanced_testcase {
     public function setUp(): void {
         parent::setUp();
         $this->resetAfterTest();
     }
 
-    /**
-     * @covers ::create_page
-     */
     public function test_create_page(): void {
         $syscontext = \context_system::instance();
         $category = $this->getDataGenerator()->create_category();
