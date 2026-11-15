@@ -56,22 +56,27 @@ final class page_contextid_test extends \advanced_testcase {
             (string)$catcontext1->id => 'Kategorie 1',
             (string)$catcontext3->id => 'Kategorie 1 / Kategorie 3',
         ];
-        $this->assertSame($expected, $source->search('', 50));
-        $this->assertSame([(string)$catcontext3->id => 'Kategorie 1 / Kategorie 3'], $source->search('rie 3', 50));
-        $this->assertNull($source->search('', 1));
-        $this->assertSame('Kategorie 1', $source->label((string)$catcontext1->id));
-        $this->assertNull($source->label((string)$catcontext2->id));
-        $this->assertNull($source->label((string)$syscontext->id));
-        $this->assertNull($source->label('-1'));
-        $this->assertNull($source->label((string)\context_user::instance($user1->id)->id));
+        $this->assertSame($expected, $source->search('', 50, []));
+        $this->assertSame([(string)$catcontext3->id => 'Kategorie 1 / Kategorie 3'], $source->search('rie 3', 50, []));
+        $this->assertNull($source->search('', 1, []));
+        $value = (string)$catcontext1->id;
+        $this->assertSame('Kategorie 1', $source->labels([$value])[$value] ?? null);
+        $value = (string)$catcontext2->id;
+        $this->assertNull($source->labels([$value])[$value] ?? null);
+        $value = (string)$syscontext->id;
+        $this->assertNull($source->labels([$value])[$value] ?? null);
+        $this->assertNull($source->labels(['-1'])['-1'] ?? null);
+        $value = (string)\context_user::instance($user1->id)->id;
+        $this->assertNull($source->labels([$value])[$value] ?? null);
 
         $this->setAdminUser();
         $source = new page_contextid($syscontext->id);
-        $result = $source->search('', 50);
+        $result = $source->search('', 50, []);
         $defaultcontext = \context_coursecat::instance(\core_course_category::get_default()->id);
         $expected = [$syscontext->id, $defaultcontext->id, $catcontext1->id, $catcontext3->id, $catcontext2->id];
         $this->assertSame($expected, array_keys($result));
-        $this->assertSame('System', $source->label((string)$syscontext->id));
+        $value = (string)$syscontext->id;
+        $this->assertSame('System', $source->labels([$value])[$value] ?? null);
 
         // The current context stays selectable when the capability is lost.
         $this->setUser($user1);
@@ -79,8 +84,9 @@ final class page_contextid_test extends \advanced_testcase {
         $source = new page_contextid($catcontext2->id);
         role_unassign($editorroleid, $user1->id, $catcontext2->id);
         accesslib_clear_all_caches_for_unit_testing();
-        $this->assertArrayNotHasKey((string)$catcontext2->id, $source->search('', 50));
-        $this->assertSame('Kategorie 2', $source->label((string)$catcontext2->id));
+        $this->assertArrayNotHasKey((string)$catcontext2->id, $source->search('', 50, []));
+        $value = (string)$catcontext2->id;
+        $this->assertSame('Kategorie 2', $source->labels([$value])[$value] ?? null);
 
         $this->setUser($this->getDataGenerator()->create_user());
         $this->expectException(\required_capability_exception::class);

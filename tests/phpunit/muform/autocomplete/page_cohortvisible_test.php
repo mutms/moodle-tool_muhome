@@ -17,10 +17,10 @@
 // phpcs:disable moodle.Files.BoilerplateComment.CommentEndedTooSoon
 // phpcs:disable moodle.Files.LineLength.TooLong
 
-namespace tool_muhome\phpunit\muform\autocompletemany;
+namespace tool_muhome\phpunit\muform\autocomplete;
 
 use tool_muhome\local\page;
-use tool_muhome\muform\autocompletemany\page_cohortvisible;
+use tool_muhome\muform\autocomplete\page_cohortvisible;
 use tool_mulib\local\mulib;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -32,7 +32,7 @@ use PHPUnit\Framework\Attributes\Group;
  * @copyright   2026 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-#[CoversClass(\tool_muhome\muform\autocompletemany\page_cohortvisible::class)]
+#[CoversClass(\tool_muhome\muform\autocomplete\page_cohortvisible::class)]
 #[Group('MuTMS')]
 final class page_cohortvisible_test extends \advanced_testcase {
     #[\Override]
