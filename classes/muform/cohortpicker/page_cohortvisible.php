@@ -16,9 +16,9 @@
 
 // phpcs:disable moodle.Files.BoilerplateComment.CommentEndedTooSoon
 
-namespace tool_muhome\muform\autocomplete;
+namespace tool_muhome\muform\cohortpicker;
 
-use tool_mulib\muform\util\autocomplete\cohort_trait;
+use core\context;
 
 /**
  * Cohorts that may see a home page.
@@ -27,17 +27,15 @@ use tool_mulib\muform\util\autocomplete\cohort_trait;
  * @copyright   2026 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class page_cohortvisible extends \tool_mulib\muform\autocomplete\base {
-    use cohort_trait;
-
-    /** @var \context page context */
-    private \context $context;
+final class page_cohortvisible extends \tool_mulib\muform\cohortpicker\base {
+    /** @var context page context */
+    private context $context;
 
     /**
      * Constructor.
      *
-     * @param int $pageid 0 when creating a new page
-     * @param int $contextid context of new page, ignored for existing pages
+     * @param int $pageid existing page, 0 for a new one
+     * @param int $contextid context of a new page, ignored for existing ones
      */
     public function __construct(
         /** @var int page id */
@@ -46,12 +44,11 @@ final class page_cohortvisible extends \tool_mulib\muform\autocomplete\base {
         private readonly int $contextid
     ) {
         global $DB;
-
         if ($pageid) {
             $page = $DB->get_record('tool_muhome_page', ['id' => $pageid], '*', MUST_EXIST);
-            $this->context = \context::instance_by_id($page->contextid);
+            $this->context = context::instance_by_id($page->contextid);
         } else {
-            $this->context = \context::instance_by_id($contextid);
+            $this->context = context::instance_by_id($contextid);
         }
         require_capability('tool/muhome:manage', $this->context);
     }
@@ -62,26 +59,17 @@ final class page_cohortvisible extends \tool_mulib\muform\autocomplete\base {
     }
 
     #[\Override]
-    public function search(string $query, int $maxitems, array $exclude): ?array {
-        return $this->search_cohorts($this->context, $query, $maxitems, $exclude);
-    }
-
-    #[\Override]
-    public function labels(array $values): array {
-        return $this->cohort_labels($this->context, $values, $this->get_current());
-    }
-
-    #[\Override]
-    public function validate(array $values): array {
-        return $this->validate_cohorts($this->context, $values, $this->get_current());
+    protected function get_context(): context {
+        return $this->context;
     }
 
     /**
-     * Cohorts already allowed to see the page.
+     * Cohorts already used stay valid.
      *
      * @return int[]
      */
-    private function get_current(): array {
+    #[\Override]
+    protected function get_current_cohortids(): array {
         global $DB;
         if (!$this->pageid) {
             return [];

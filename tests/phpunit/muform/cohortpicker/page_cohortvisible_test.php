@@ -17,28 +17,51 @@
 // phpcs:disable moodle.Files.BoilerplateComment.CommentEndedTooSoon
 // phpcs:disable moodle.Files.LineLength.TooLong
 
-namespace tool_muhome\phpunit\muform\autocomplete;
+namespace tool_muhome\phpunit\muform\cohortpicker;
 
 use tool_muhome\local\page;
-use tool_muhome\muform\autocomplete\page_cohortvisible;
+use tool_muhome\muform\cohortpicker\page_cohortvisible;
 use tool_mulib\local\mulib;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Visible to cohorts autocomplete source tests.
+ * Visible to cohorts picker source tests.
  *
  * @package     tool_muhome
  * @copyright   2026 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-#[CoversClass(\tool_muhome\muform\autocomplete\page_cohortvisible::class)]
+#[CoversClass(\tool_muhome\muform\cohortpicker\page_cohortvisible::class)]
 #[Group('MuTMS')]
 final class page_cohortvisible_test extends \advanced_testcase {
     #[\Override]
     public function setUp(): void {
         parent::setUp();
         $this->resetAfterTest();
+    }
+
+    /**
+     * Cohorts offered by the source.
+     *
+     * @param \tool_mulib\muform\cohortpicker\base $source
+     * @param string $query
+     * @param string[] $exclude
+     * @return string[] cohort names indexed with cohort ids, in the order of names
+     */
+    private function search(\tool_mulib\muform\cohortpicker\base $source, string $query, array $exclude = []): array {
+        return array_column($source->search($query, $exclude)['cohorts'], 'name', 'id');
+    }
+
+    /**
+     * Values the source does not accept.
+     *
+     * @param \tool_mulib\muform\cohortpicker\base $source
+     * @param string[] $values
+     * @return string[]
+     */
+    private function refused(\tool_mulib\muform\cohortpicker\base $source, array $values): array {
+        return array_values(array_diff($values, array_map('strval', array_keys($source->labels($values)))));
     }
 
     public function test_source(): void {
@@ -76,37 +99,36 @@ final class page_cohortvisible_test extends \advanced_testcase {
         $source = new page_cohortvisible(0, $syscontext->id);
         $this->assertSame([0, $syscontext->id], $source->get_args());
         $all = [$cohort1->id => 'Kohorta 1', $cohort2->id => 'Kohorta 2', $cohort3->id => 'Kohorta 3'];
-        $this->assertSame($all, $source->search('', 50, []));
-        $this->assertNull($source->search('', 2, []));
-        $this->assertSame([$cohort2->id => 'Kohorta 2', $cohort3->id => 'Kohorta 3'], $source->search('', 50, [(string)$cohort1->id]));
+        $this->assertSame($all, $this->search($source, ''));
+        $this->assertSame([$cohort2->id => 'Kohorta 2', $cohort3->id => 'Kohorta 3'], $this->search($source, '', [(string)$cohort1->id]));
 
         $source = new page_cohortvisible((int)$page1->id, 0);
-        $this->assertSame($all, $source->search('', 50, []));
-        $this->assertSame([$cohort1->id => 'Kohorta 1'], $source->search('ta 1', 50, []));
-        $this->assertSame([], $source->validate([(string)$cohort1->id, (string)$cohort2->id, (string)$cohort3->id]));
+        $this->assertSame($all, $this->search($source, ''));
+        $this->assertSame([$cohort1->id => 'Kohorta 1'], $this->search($source, 'ta 1'));
+        $this->assertSame([], $this->refused($source, [(string)$cohort1->id, (string)$cohort2->id, (string)$cohort3->id]));
         $this->assertSame([(string)$cohort1->id => 'Kohorta 1'], $source->labels([(string)$cohort1->id, '-1', 'x']));
 
         $this->setUser($user2);
 
         $source = new page_cohortvisible((int)$page2->id, 0);
-        $this->assertSame([$cohort2->id => 'Kohorta 2', $cohort3->id => 'Kohorta 3'], $source->search('', 50, []));
-        $this->assertSame([(string)$cohort1->id => 'Error'], $source->validate([(string)$cohort1->id, (string)$cohort2->id, (string)$cohort3->id]));
+        $this->assertSame([$cohort2->id => 'Kohorta 2', $cohort3->id => 'Kohorta 3'], $this->search($source, ''));
+        $this->assertSame([(string)$cohort1->id], $this->refused($source, [(string)$cohort1->id, (string)$cohort2->id, (string)$cohort3->id]));
         $this->assertSame([], $source->labels([(string)$cohort1->id]));
 
         $source = new page_cohortvisible(0, $catcontext1->id);
-        $this->assertSame([$cohort2->id => 'Kohorta 2', $cohort3->id => 'Kohorta 3'], $source->search('', 50, []));
+        $this->assertSame([$cohort2->id => 'Kohorta 2', $cohort3->id => 'Kohorta 3'], $this->search($source, ''));
 
         $this->setUser($user3);
 
         $source = new page_cohortvisible((int)$page2->id, 0);
-        $this->assertSame([$cohort3->id => 'Kohorta 3'], $source->search('', 50, []));
+        $this->assertSame([$cohort3->id => 'Kohorta 3'], $this->search($source, ''));
 
         // Cohorts already allowed to see the page stay valid.
         $this->setAdminUser();
         page::update((object)['id' => $page2->id, 'uservisible' => 0, 'cohortvisible' => [$cohort1->id]]);
         $this->setUser($user2);
         $source = new page_cohortvisible((int)$page2->id, 0);
-        $this->assertSame([], $source->validate([(string)$cohort1->id]));
+        $this->assertSame([], $this->refused($source, [(string)$cohort1->id]));
         $this->assertSame([(string)$cohort1->id => 'Kohorta 1'], $source->labels([(string)$cohort1->id]));
 
         $this->expectException(\required_capability_exception::class);
@@ -153,19 +175,19 @@ final class page_cohortvisible_test extends \advanced_testcase {
         $source = new page_cohortvisible((int)$page0->id, 0);
         $this->assertEqualsCanonicalizing(
             [$cohort0->id, $cohort1->id, $cohort2->id, $tenantcohort1->id, $tenantcohort2->id],
-            array_keys($source->search('', 50, []))
+            array_keys($this->search($source, ''))
         );
 
         $source = new page_cohortvisible((int)$page1->id, 0);
         $this->assertEqualsCanonicalizing(
             [$cohort0->id, $cohort1->id, $tenantcohort1->id, $tenantcohort2->id],
-            array_keys($source->search('', 50, []))
+            array_keys($this->search($source, ''))
         );
-        $this->assertSame([(string)$cohort2->id => 'Error'], $source->validate([(string)$cohort1->id, (string)$cohort2->id]));
+        $this->assertSame([(string)$cohort2->id], $this->refused($source, [(string)$cohort1->id, (string)$cohort2->id]));
 
         $source = new page_cohortvisible(0, $syscontext->id);
-        $this->assertSame([], $source->validate([(string)$cohort2->id]));
+        $this->assertSame([], $this->refused($source, [(string)$cohort2->id]));
         $source = new page_cohortvisible(0, $tenant1catcontext->id);
-        $this->assertSame([(string)$cohort2->id => 'Error'], $source->validate([(string)$cohort2->id]));
+        $this->assertSame([(string)$cohort2->id], $this->refused($source, [(string)$cohort2->id]));
     }
 }

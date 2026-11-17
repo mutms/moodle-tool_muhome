@@ -19,7 +19,7 @@
 
 namespace tool_muhome\local\form;
 
-use tool_mulib\muform\element\autocompletemany;
+use tool_mulib\muform\element\cohortpickermany;
 use tool_mulib\muform\element\buttons;
 use tool_mulib\muform\element\cancel;
 use tool_mulib\muform\element\checkbox;
@@ -30,7 +30,7 @@ use tool_mulib\muform\element\submit;
 use tool_mulib\muform\element\text;
 use tool_mulib\muform\form;
 use tool_muhome\local\page;
-use tool_muhome\muform\autocomplete\page_cohortvisible;
+use tool_muhome\muform\cohortpicker\page_cohortvisible;
 
 /**
  * Update a page.
@@ -57,7 +57,7 @@ final class page_update extends form {
         $this->add(new checkbox('uservisible', get_string('uservisible', 'tool_muhome')));
 
         $source = new page_cohortvisible((int)$page['id'], 0);
-        $this->add(new autocompletemany('cohortvisible', get_string('cohortvisible', 'tool_muhome'), $source));
+        $this->add(new cohortpickermany('cohortvisible', get_string('cohortvisible', 'tool_muhome'), $source));
         $this->get_display_manager()->hide_if('cohortvisible', 'uservisible', 'checked');
 
         $this->add(new datetime('hiddenbefore', get_string('hiddenbefore', 'tool_muhome')));

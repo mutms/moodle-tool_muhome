@@ -20,7 +20,7 @@
 namespace tool_muhome\local\form;
 
 use tool_mulib\muform\element\autocomplete;
-use tool_mulib\muform\element\autocompletemany;
+use tool_mulib\muform\element\cohortpickermany;
 use tool_mulib\muform\element\buttons;
 use tool_mulib\muform\element\cancel;
 use tool_mulib\muform\element\checkbox;
@@ -32,7 +32,7 @@ use tool_mulib\muform\element\text;
 use tool_mulib\muform\form;
 use tool_muhome\local\page;
 use tool_muhome\muform\autocomplete\page_contextid;
-use tool_muhome\muform\autocomplete\page_cohortvisible;
+use tool_muhome\muform\cohortpicker\page_cohortvisible;
 
 /**
  * Add a page.
@@ -63,7 +63,7 @@ final class page_create extends form {
         $this->add(new checkbox('uservisible', get_string('uservisible', 'tool_muhome')));
 
         $source = new page_cohortvisible(0, $context->id);
-        $this->add(new autocompletemany('cohortvisible', get_string('cohortvisible', 'tool_muhome'), $source));
+        $this->add(new cohortpickermany('cohortvisible', get_string('cohortvisible', 'tool_muhome'), $source));
         $this->get_display_manager()->hide_if('cohortvisible', 'uservisible', 'checked');
 
         $this->add(new datetime('hiddenbefore', get_string('hiddenbefore', 'tool_muhome')));
@@ -96,7 +96,7 @@ final class page_create extends form {
         }
         // Cohorts were searched in the original context, the selected context may belong to a tenant.
         $source = new page_cohortvisible(0, (int)$data['contextid']);
-        if ($source->validate($data['cohortvisible'])) {
+        if (!$source->are_allowed($data['cohortvisible'])) {
             $allerrors['cohortvisible'][] = get_string('error');
         }
     }
