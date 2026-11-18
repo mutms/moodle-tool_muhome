@@ -19,10 +19,6 @@
 /**
  * Strings for component 'tool_muhome', language 'it'.
  *
- * NOTE: This Italian translation was produced automatically by an AI language
- * model and has not yet been reviewed by a human translator. Corrections are
- * welcome.
- *
  * @package    tool_muhome
  * @copyright  2026 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -36,7 +32,7 @@ $string['edit_mode_hint'] = 'Attiva la _Modalità modifica_ per iniziare ad aggi
 $string['error_nopages'] = 'Non sono state trovate pagine';
 $string['guestvisible'] = 'Visibile agli ospiti';
 $string['hiddenafter'] = 'Nascosta dopo';
-$string['hiddenbefore'] = 'Nascosta prima';
+$string['hiddenbefore'] = 'Nascosta prima di';
 $string['hiddenfromtenants'] = 'Nascosta ai tenant';
 $string['management'] = 'Gestione delle home page';
 $string['management_actions'] = 'Azioni di gestione delle home page';
@@ -57,7 +53,7 @@ $string['page_status_draft'] = 'Bozza';
 $string['page_title'] = 'Titolo';
 $string['page_update'] = 'Configura pagina';
 $string['page_url'] = 'URL della pagina';
-$string['page_url_copy'] = 'Copia l\'URL della pagina nella clipboard';
+$string['page_url_copy'] = 'Copia l\'URL della pagina negli appunti';
 $string['pages'] = 'Pagine';
 $string['pluginname'] = 'Home page personalizzate';
 $string['privacy:metadata'] = 'Il plugin Home page personalizzate non memorizza dati personali';
