@@ -16,7 +16,7 @@
 
 // phpcs:disable moodle.Files.BoilerplateComment.CommentEndedTooSoon
 
-namespace tool_muhome\muform\cohortpicker;
+namespace tool_muhome\picker\cohort;
 
 use core\context;
 
@@ -27,7 +27,7 @@ use core\context;
  * @copyright   2026 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class page_cohortvisible extends \tool_mulib\muform\cohortpicker\base {
+final class page_cohortvisible extends \tool_mulib\picker\cohort\base {
     /** @var context page context */
     private context $context;
 

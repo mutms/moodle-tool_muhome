@@ -30,7 +30,7 @@ use tool_mulib\muform\element\submit;
 use tool_mulib\muform\element\text;
 use tool_mulib\muform\form;
 use tool_muhome\local\page;
-use tool_muhome\muform\cohortpicker\page_cohortvisible;
+use tool_muhome\picker\cohort\page_cohortvisible;
 
 /**
  * Update a page.
