@@ -43,7 +43,7 @@ Feature: Custom page managers may manage custom home pages
     Given I change window size to "large"
     And I log in as "manager1"
     And I navigate to "Appearance > Custom home pages > Home pages management" in site administration
-    And I should see "No pages found"
+    And I should see "Nothing to display"
 
     When I press "Add page"
     And the following muform fields in the "dialog[open]" "css_element" match:
@@ -54,7 +54,7 @@ Feature: Custom page managers may manage custom home pages
     And I set the following muform fields in the "dialog[open]" "css_element":
       | Page name            | Home page 1 |
     And I click on "Add page" "button" in the "dialog[open]" "css_element"
-    Then the following should exist in the "reportbuilder-table" table:
+    Then the following should exist in the mureport:
       | Page priority | Page name       | Management category | Title | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1000          | Home page 1     | System              |       | No                | Yes                  |                     |                 |                | Draft    |
 
@@ -73,13 +73,12 @@ Feature: Custom page managers may manage custom home pages
       | Hidden before         | 2025-11-05 09:00   |
       | Hidden after          | 2035-12-01 09:00   |
     And I click on "Add page" "button" in the "dialog[open]" "css_element"
-    Then the following should exist in the "reportbuilder-table" table:
+    Then the following should exist in the mureport:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1000          | Home page 1     | System              |            | No                | Yes                  |                     |                 |                | Draft    |
       | 997           | Home page 2     | Cat 1               | HP title 2 | Yes               | No                   | Cohort 1, Cohort 2  | 5/11/25, 09:00  | 1/12/35, 09:00 | Active   |
 
-    When I click on "Actions" "link" in the "Home page 1" "table_row"
-    And I click on "Configure page" "link" in the "Home page 1" "table_row"
+    When I click on "Configure page" action in the "Home page 1" mureport row
     And the following muform fields in the "dialog[open]" "css_element" match:
       | Page name             | Home page 1 |
       | Page priority         | 1000        |
@@ -97,33 +96,30 @@ Feature: Custom page managers may manage custom home pages
       | Hidden before         | 2026-11-05 09:00   |
       | Hidden after          | 2038-12-01 09:00   |
     And I click on "Update" "button" in the "dialog[open]" "css_element"
-    Then the following should exist in the "reportbuilder-table" table:
+    Then the following should exist in the mureport:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1001          | Home page A     | System              | HP title A | Yes               | No                   | Cohort 2, Cohort 3  | 5/11/26, 09:00  | 1/12/38, 09:00 | Archived |
       | 997           | Home page 2     | Cat 1               | HP title 2 | Yes               | No                   | Cohort 1, Cohort 2  | 5/11/25, 09:00  | 1/12/35, 09:00 | Active   |
 
-    When I click on "Actions" "link" in the "Home page A" "table_row"
-    And I click on "Move page" "link" in the "Home page A" "table_row"
+    When I click on "Move page" action in the "Home page A" mureport row
     And I set the following muform fields in the "dialog[open]" "css_element":
       | Management category   | Cat 2       |
     And I click on "Move page" "button" in the "dialog[open]" "css_element"
-    Then the following should exist in the "reportbuilder-table" table:
+    Then the following should exist in the mureport:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1001          | Home page A     | Cat 2               | HP title A | Yes               | No                   | Cohort 2, Cohort 3  | 5/11/26, 09:00  | 1/12/38, 09:00 | Archived |
       | 997           | Home page 2     | Cat 1               | HP title 2 | Yes               | No                   | Cohort 1, Cohort 2  | 5/11/25, 09:00  | 1/12/35, 09:00 | Active   |
 
-    When I click on "Actions" "link" in the "Home page A" "table_row"
-    And I click on "Move page" "link" in the "Home page A" "table_row"
+    When I click on "Move page" action in the "Home page A" mureport row
     And I set the following muform fields in the "dialog[open]" "css_element":
       | Management category   | System      |
     And I click on "Move page" "button" in the "dialog[open]" "css_element"
-    Then the following should exist in the "reportbuilder-table" table:
+    Then the following should exist in the mureport:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1001          | Home page A     | System              | HP title A | Yes               | No                   | Cohort 2, Cohort 3  | 5/11/26, 09:00  | 1/12/38, 09:00 | Archived |
       | 997           | Home page 2     | Cat 1               | HP title 2 | Yes               | No                   | Cohort 1, Cohort 2  | 5/11/25, 09:00  | 1/12/35, 09:00 | Active   |
 
-    When I click on "Actions" "link" in the "Home page A" "table_row"
-    And I click on "Configure page" "link" in the "Home page A" "table_row"
+    When I click on "Configure page" action in the "Home page A" mureport row
     And I set the following muform fields in the "dialog[open]" "css_element":
       | Page name             | Home page 1 |
       | Title                 | HP title 1  |
@@ -134,15 +130,14 @@ Feature: Custom page managers may manage custom home pages
       | Hidden before         |             |
       | Hidden after          |             |
     And I click on "Update" "button" in the "dialog[open]" "css_element"
-    Then the following should exist in the "reportbuilder-table" table:
+    Then the following should exist in the mureport:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1000          | Home page 1     | System              | HP title 1 | No                | Yes                  |                     |                 |                | Archived |
       | 997           | Home page 2     | Cat 1               | HP title 2 | Yes               | No                   | Cohort 1, Cohort 2  | 5/11/25, 09:00  | 1/12/35, 09:00 | Active   |
 
-    When I click on "Actions" "link" in the "Home page 1" "table_row"
-    And I click on "Delete page" "link" in the "Home page 1" "table_row"
+    When I click on "Delete page" action in the "Home page 1" mureport row
     And I click on "Delete page" "button" in the "dialog[open]" "css_element"
-    Then the following should exist in the "reportbuilder-table" table:
+    Then the following should exist in the mureport:
       | Page priority | Page name       | Management category | Title      | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 997           | Home page 2     | Cat 1               | HP title 2 | Yes               | No                   | Cohort 1, Cohort 2  | 5/11/25, 09:00  | 1/12/35, 09:00 | Active   |
     And I should not see "Home page 1"
@@ -213,17 +208,15 @@ Feature: Custom page managers may manage custom home pages
     And I turn editing mode off
 
     When I am on the "tool_muhome > All home pages management" page
-    And I click on "Actions" "link" in the "Home page 1" "table_row"
-    And I click on "Move page" "link" in the "Home page 1" "table_row"
+    And I click on "Move page" action in the "Home page 1" mureport row
     And I set the following muform fields in the "dialog[open]" "css_element":
       | Management category   | Cat 1       |
     And I click on "Move page" "button" in the "dialog[open]" "css_element"
-    And I click on "Actions" "link" in the "Other page 2" "table_row"
-    And I click on "Move page" "link" in the "Other page 2" "table_row"
+    And I click on "Move page" action in the "Other page 2" mureport row
     And I set the following muform fields in the "dialog[open]" "css_element":
       | Management category   | System       |
     And I click on "Move page" "button" in the "dialog[open]" "css_element"
-    Then the following should exist in the "reportbuilder-table" table:
+    Then the following should exist in the mureport:
       | Page name       | Management category |
       | Home page 1     | Cat 1               |
       | Other page 2    | System              |

@@ -86,7 +86,7 @@ Feature: Multi-tenancy use cases for custom home pages
 
     When I click on "Tenant management" "link" in the ".primary-navigation" "css_element"
     And I click on "Home pages management" "link" in the ".primary-navigation" "css_element"
-    Then the following should exist in the "reportbuilder-table" table:
+    Then the following should exist in the mureport:
       | Page priority | Page name       | Management category | Status   |
       | 990           | Other page 1    | Tenant cat 1        | Active   |
 
@@ -96,6 +96,6 @@ Feature: Multi-tenancy use cases for custom home pages
 
     When I click on "Tenant management" "link" in the ".primary-navigation" "css_element"
     And I click on "Home pages management" "link" in the ".primary-navigation" "css_element"
-    Then the following should exist in the "reportbuilder-table" table:
+    Then the following should exist in the mureport:
       | Page priority | Page name       | Management category | Status   |
       | 990           | Other page 1    | Tenant cat 1        | Active   |

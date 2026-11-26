@@ -69,7 +69,7 @@ if ($form->is_cancelled()) {
 
 if ($data = $form->get_data()) {
     page::move($page->id, (int)$data->contextid);
-    $handler->submitted($returnurl);
+    $handler->submitted($returnurl, ['changed' => 'rows']);
 }
 
 $handler->render($form);

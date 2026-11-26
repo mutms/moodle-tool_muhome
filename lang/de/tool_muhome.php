@@ -31,9 +31,7 @@
 $string['cachedef_mypages'] = 'Cache meiner Startseiten';
 $string['cohort_usage_page'] = 'Für Mitglieder der globalen Gruppe sichtbare Startseiten';
 $string['cohortvisible'] = 'Für globale Gruppen sichtbar';
-$string['currentcontextonly'] = 'Kursunterbereiche ausschließen';
 $string['edit_mode_hint'] = 'Schalten Sie _Bearbeiten_ ein, um Blöcke hinzuzufügen und diese eigene Startseite zu personalisieren.';
-$string['error_nopages'] = 'Keine Seiten gefunden';
 $string['guestvisible'] = 'Für Gäste sichtbar';
 $string['hiddenafter'] = 'Verborgen nach';
 $string['hiddenbefore'] = 'Verborgen vor';
@@ -59,6 +57,7 @@ $string['page_update'] = 'Seite konfigurieren';
 $string['page_url'] = 'URL der Seite';
 $string['page_url_copy'] = 'URL der Seite in die Zwischenablage kopieren';
 $string['pages'] = 'Seiten';
+$string['pagesearch'] = 'Seiten suchen';
 $string['pluginname'] = 'Eigene Startseiten';
 $string['privacy:metadata'] = 'Das Plugin „Eigene Startseiten“ speichert keine personenbezogenen Daten.';
 $string['setting_addmenu'] = 'Zusätzliches Menü für Startseiten hinzufügen';

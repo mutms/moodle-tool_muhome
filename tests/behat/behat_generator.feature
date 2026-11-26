@@ -46,7 +46,7 @@ Feature: Behat tool_muhome generator usage
       | 999      | Category     | CAT3      | Other page 4 | PP4   | 1            | 0           | CH1, CH2      | ## 2025-12-24 ## | ## 2035-01-01 ## | active   |
     And I log in as "viewer1"
     And I navigate to "Appearance > Custom home pages > Home pages management" in site administration
-    Then the following should exist in the "reportbuilder-table" table:
+    Then the following should exist in the mureport:
       | Page priority | Page name       | Management category | Title | Visible to guests | Visible to all users | Visible to cohorts  | Hidden before   | Hidden after   | Status   |
       | 1000          | Home page 1     | System              |       | Yes               | Yes                  |                     |                 |                | Active   |
       | 990           | Other page 2    | System              |       | No                | No                   |                     |                 |                | Draft    |

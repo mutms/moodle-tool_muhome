@@ -31,9 +31,7 @@
 $string['cachedef_mypages'] = 'Cache das minhas páginas principais';
 $string['cohort_usage_page'] = 'Páginas principais visíveis para os membros do grupo global';
 $string['cohortvisible'] = 'Visível para grupos globais';
-$string['currentcontextonly'] = 'Excluir subcategorias';
 $string['edit_mode_hint'] = 'Ative o _Modo de edição_ para começar a adicionar blocos e a personalizar esta página principal personalizada.';
-$string['error_nopages'] = 'Não foram encontradas páginas';
 $string['guestvisible'] = 'Visível para visitantes';
 $string['hiddenafter'] = 'Oculta depois de';
 $string['hiddenbefore'] = 'Oculta antes de';
@@ -59,6 +57,7 @@ $string['page_update'] = 'Configurar página';
 $string['page_url'] = 'URL da página';
 $string['page_url_copy'] = 'Copiar o URL da página para a área de transferência';
 $string['pages'] = 'Páginas';
+$string['pagesearch'] = 'Pesquisar páginas';
 $string['pluginname'] = 'Páginas principais personalizadas';
 $string['privacy:metadata'] = 'O módulo Páginas principais personalizadas não armazena quaisquer dados pessoais';
 $string['setting_addmenu'] = 'Adicionar menu de páginas principais adicionais';

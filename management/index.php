@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 // phpcs:disable moodle.Files.BoilerplateComment.CommentEndedTooSoon
+// phpcs:disable moodle.Files.RequireLogin.Missing
 // phpcs:disable moodle.Files.LineLength.TooLong
 // phpcs:disable moodle.Commenting.InlineComment.TypeHintingMatch
 
@@ -35,33 +36,15 @@ require('../../../../config.php');
 
 $contextid = optional_param('contextid', 0, PARAM_INT);
 
-if ($contextid) {
-    $context = context::instance_by_id($contextid);
-} else {
-    $context = context_system::instance();
-}
-unset($contextid);
-if ($context->contextlevel != CONTEXT_SYSTEM && $context->contextlevel != CONTEXT_COURSECAT) {
-    throw new moodle_exception('invalidcontext');
-}
-
-require_login();
-require_capability('tool/muhome:view', $context);
+$report = \tool_muhome\mureport\system_report\pages::make_instance($contextid ?: context_system::instance()->id);
+$report->require_access();
+$context = $report->get_context();
 
 $currenturl = new url('/admin/tool/muhome/management/index.php', ['contextid' => $context->id]);
 
 management::setup_index_page($currenturl, $context);
+$report->init_page($currenturl);
 
 echo $OUTPUT->header();
-$report = \core_reportbuilder\system_report_factory::create(
-    \tool_muhome\reportbuilder\local\systemreports\pages::class,
-    $context
-);
-echo $OUTPUT->render(new \tool_mulib\output\report_filter_bar($report, pinned: [
-    'page:name' => null,
-    'page:currentcontextonly' => null,
-    'page:status' => null,
-]));
-echo $report->output();
-echo $OUTPUT->render(new \tool_mulib\output\report_pager($report));
+echo $OUTPUT->render(new \tool_mureport\output\report_full($report));
 echo $OUTPUT->footer();

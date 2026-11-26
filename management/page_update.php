@@ -66,7 +66,7 @@ if ($form->is_cancelled()) {
 if ($data = $form->get_data()) {
     $data->id = $page->id;
     page::update($data);
-    $handler->submitted($returnurl);
+    $handler->submitted($returnurl, ['changed' => 'rows']);
 }
 
 $handler->render($form);

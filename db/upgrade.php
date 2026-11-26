@@ -41,5 +41,14 @@ function xmldb_tool_muhome_upgrade($oldversion): bool {
         upgrade_plugin_savepoint(true, 2026013145, 'tool', 'muhome');
     }
 
+    if ($oldversion < 2026112653) {
+        $classname = 'tool_muhome\\reportbuilder\\local\\systemreports\\pages';
+        foreach (\core_reportbuilder\local\models\report::get_records(['source' => $classname]) as $report) {
+            $report->delete();
+        }
+
+        upgrade_plugin_savepoint(true, 2026112653, 'tool', 'muhome');
+    }
+
     return true;
 }

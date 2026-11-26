@@ -27,9 +27,7 @@
 $string['cachedef_mypages'] = 'Mezipaměť mých domovských stránek';
 $string['cohort_usage_page'] = 'Domovské stránky viditelné pro členy globální skupiny';
 $string['cohortvisible'] = 'Viditelná pro globální skupiny';
-$string['currentcontextonly'] = 'Vyloučit podkategorie';
 $string['edit_mode_hint'] = 'Zapněte _Režim úprav_ a začněte přidávat bloky a přizpůsobovat tuto vlastní domovskou stránku.';
-$string['error_nopages'] = 'Nebyly nalezeny žádné stránky';
 $string['guestvisible'] = 'Viditelná pro hosty';
 $string['hiddenafter'] = 'Skrytá po';
 $string['hiddenbefore'] = 'Skrytá před';
@@ -55,6 +53,7 @@ $string['page_update'] = 'Nastavit stránku';
 $string['page_url'] = 'Adresa URL stránky';
 $string['page_url_copy'] = 'Zkopírovat adresu URL stránky do schránky';
 $string['pages'] = 'Stránky';
+$string['pagesearch'] = 'Hledat stránky';
 $string['pluginname'] = 'Vlastní domovské stránky';
 $string['privacy:metadata'] = 'Plugin Vlastní domovské stránky neukládá žádné osobní údaje';
 $string['setting_addmenu'] = 'Přidat nabídku dalších domovských stránek';

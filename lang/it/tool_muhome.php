@@ -27,9 +27,7 @@
 $string['cachedef_mypages'] = 'Cache delle mie home page';
 $string['cohort_usage_page'] = 'Home page visibili ai membri del gruppo globale';
 $string['cohortvisible'] = 'Visibile ai gruppi globali';
-$string['currentcontextonly'] = 'Escludi sottocategorie';
 $string['edit_mode_hint'] = 'Attiva la _Modalità modifica_ per iniziare ad aggiungere blocchi e personalizzare questa home page personalizzata.';
-$string['error_nopages'] = 'Non sono state trovate pagine';
 $string['guestvisible'] = 'Visibile agli ospiti';
 $string['hiddenafter'] = 'Nascosta dopo';
 $string['hiddenbefore'] = 'Nascosta prima di';
@@ -55,6 +53,7 @@ $string['page_update'] = 'Configura pagina';
 $string['page_url'] = 'URL della pagina';
 $string['page_url_copy'] = 'Copia l\'URL della pagina negli appunti';
 $string['pages'] = 'Pagine';
+$string['pagesearch'] = 'Cerca pagine';
 $string['pluginname'] = 'Home page personalizzate';
 $string['privacy:metadata'] = 'Il plugin Home page personalizzate non memorizza dati personali';
 $string['setting_addmenu'] = 'Aggiungi un menu di home page aggiuntive';

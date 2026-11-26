@@ -15,4 +15,5 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 - migration to new forms library
 - cohort names link to cohort management, the advanced cohort management page is used when installed
-- reports have an always visible filter bar, the standard filters form is available as Advanced filtering
+- home pages management uses the Advanced report builder: general search, filter chips, saved filters,
+  configurable columns and filters; only pages the user may view in their own category are listed

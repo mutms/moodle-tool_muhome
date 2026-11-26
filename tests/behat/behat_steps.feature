@@ -47,7 +47,7 @@ Feature: tool_muhome navigation behat steps test
 
     When I am on the "tool_muhome > All home pages management" page
     Then I should see "Home pages management"
-    And the following should exist in the "reportbuilder-table" table:
+    And the following should exist in the mureport:
       | Page priority | Page name       | Management category | Status   |
       | 1000          | Home page 1     | System              | Active   |
       | 990           | Other page 2    | Cat 2               | Draft    |
@@ -70,7 +70,7 @@ Feature: tool_muhome navigation behat steps test
 
     When I navigate to "Appearance > Custom home pages > Home pages management" in site administration
     Then I should see "Home pages management"
-    And the following should exist in the "reportbuilder-table" table:
+    And the following should exist in the mureport:
       | Page priority | Page name       | Management category | Status   |
       | 1000          | Home page 1     | System              | Active   |
       | 990           | Other page 2    | Cat 2               | Draft    |
@@ -81,7 +81,7 @@ Feature: tool_muhome navigation behat steps test
 
     When I am on the "Cat 2" "tool_muhome > Home pages management" page
     Then I should see "Home pages management"
-    And the following should exist in the "reportbuilder-table" table:
+    And the following should exist in the mureport:
       | Page priority | Page name       | Management category | Status   |
       | 990           | Other page 2    | Cat 2               | Draft    |
       | 980           | Other page 3    | Cat 3               | Active   |
@@ -100,7 +100,7 @@ Feature: tool_muhome navigation behat steps test
 
     When I click on "Home pages management" "link" in the ".secondary-navigation" "css_element"
     Then I should see "Home pages management"
-    And the following should exist in the "reportbuilder-table" table:
+    And the following should exist in the mureport:
       | Page priority | Page name       | Management category | Status   |
       | 990           | Other page 2    | Cat 2               | Draft    |
       | 980           | Other page 3    | Cat 3               | Active   |

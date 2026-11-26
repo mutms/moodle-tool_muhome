@@ -31,9 +31,7 @@
 $string['cachedef_mypages'] = 'Cache de mes pages d’accueil';
 $string['cohort_usage_page'] = 'Pages d’accueil visibles pour les membres de la cohorte';
 $string['cohortvisible'] = 'Visible pour les cohortes';
-$string['currentcontextonly'] = 'Exclure les sous-catégories';
 $string['edit_mode_hint'] = 'Activez le _Mode d’édition_ pour commencer à ajouter des blocs et à adapter cette page d’accueil personnalisée.';
-$string['error_nopages'] = 'Aucune page trouvée';
 $string['guestvisible'] = 'Visible pour les visiteurs anonymes';
 $string['hiddenafter'] = 'Masquée après';
 $string['hiddenbefore'] = 'Masquée avant';
@@ -59,6 +57,7 @@ $string['page_update'] = 'Configurer la page';
 $string['page_url'] = 'URL de la page';
 $string['page_url_copy'] = 'Copier l’URL de la page dans le presse-papier';
 $string['pages'] = 'Pages';
+$string['pagesearch'] = 'Rechercher des pages';
 $string['pluginname'] = 'Pages d’accueil personnalisées';
 $string['privacy:metadata'] = 'Le plugin Pages d’accueil personnalisées n’enregistre aucune donnée personnelle';
 $string['setting_addmenu'] = 'Ajouter un menu de pages d’accueil supplémentaires';

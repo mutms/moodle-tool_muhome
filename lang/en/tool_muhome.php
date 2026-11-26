@@ -27,9 +27,7 @@
 $string['cachedef_mypages'] = 'My home pages cache';
 $string['cohort_usage_page'] = 'Home pages visible to cohort members';
 $string['cohortvisible'] = 'Visible to cohorts';
-$string['currentcontextonly'] = 'Exclude sub-categories';
 $string['edit_mode_hint'] = 'Turn on _Edit mode_ to start adding blocks and personalizing this custom home page.';
-$string['error_nopages'] = 'No pages found';
 $string['guestvisible'] = 'Visible to guests';
 $string['hiddenafter'] = 'Hidden after';
 $string['hiddenbefore'] = 'Hidden before';
@@ -55,6 +53,7 @@ $string['page_update'] = 'Configure page';
 $string['page_url'] = 'Page URL';
 $string['page_url_copy'] = 'Copy page URL to clipboard';
 $string['pages'] = 'Pages';
+$string['pagesearch'] = 'Search pages';
 $string['pluginname'] = 'Custom home pages';
 $string['privacy:metadata'] = 'Custom home pages plugin does not store any personal data';
 $string['setting_addmenu'] = 'Add additional home pages menu';
