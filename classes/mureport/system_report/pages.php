@@ -87,6 +87,7 @@ final class pages extends system_report {
         $this->set_default_filters([
             'page:name' => ['multisearch' => true],
             'page:title' => ['multisearch' => true],
+            'page:id' => ['multisearch' => true],
             'page:category',
             'page:status',
             'page:guestvisible',

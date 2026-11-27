@@ -63,7 +63,7 @@ class page extends entity {
     #[\Override]
     public function get_column_names(): array {
         return [
-            'priority', 'name', 'title', 'status', 'category', 'guestvisible', 'uservisible', 'cohortvisible', 'hiddenbefore',
+            'priority', 'name', 'id', 'title', 'status', 'category', 'guestvisible', 'uservisible', 'cohortvisible', 'hiddenbefore',
             'hiddenafter', 'hiddenfromtenants', 'timecreated', 'actions',
         ];
     }
@@ -72,6 +72,7 @@ class page extends entity {
     protected function define_columns(string $selector): array {
         $alias = $this->alias;
         $column = match ($selector) {
+            'id' => $this->create_id_column(),
             'name' => $this->define_name_column(),
             'status' => $this->create_column(
                 'status',
@@ -125,7 +126,7 @@ class page extends entity {
     #[\Override]
     public function get_filter_names(): array {
         return [
-            'name', 'title', 'status', 'category', 'guestvisible', 'uservisible', 'hiddenbefore', 'hiddenafter',
+            'name', 'id', 'title', 'status', 'category', 'guestvisible', 'uservisible', 'hiddenbefore', 'hiddenafter',
             'hiddenfromtenants', 'timecreated',
         ];
     }
@@ -134,6 +135,7 @@ class page extends entity {
     protected function define_filters(string $selector): array {
         $alias = $this->alias;
         $filter = match ($selector) {
+            'id' => $this->create_id_filter(),
             'name' => new filter\text($alias, 'name', new lang_string('page_name', 'tool_muhome'), "$alias.name"),
             'status' => (new filter\checkboxes(
                 $alias,
